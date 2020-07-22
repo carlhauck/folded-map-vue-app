@@ -36,7 +36,10 @@
       </div>
       <div class="form-group">
         <label>House number:</label>
-        <input type="text" size="5" maxlength="5" class="form-control" v-model="user.street_num">
+        <ValidationProvider v-slot="{ errors }">
+          <input type="text" size="5" maxlength="5" class="form-control" v-model="user.street_num">
+          <span>{{ errors[0] }}</span>
+        </ValidationProvider>
       </div>
       <div class="form-group">
         <label>Direction:</label>
@@ -73,7 +76,20 @@
 
 <script>
 import axios from "axios";
+import { ValidationProvider, extend } from "vee-validate";
+import { required, email } from "vee-validate/dist/rules";
+
+// extend("max", {
+//   validate(value, args) {
+//     return value.length <= args.length;
+//   },
+//   params: ["length"]
+// });
+
 export default {
+  components: {
+    ValidationProvider
+  },
   data: function() {
     return {
       errors: [],
