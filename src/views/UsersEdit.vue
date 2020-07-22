@@ -7,51 +7,78 @@
       </ul>
       <div class="form-group">
         <label>First name:</label>
-        <input type="text" class="form-control" v-model="user.first_name">
+        <ValidationProvider name="First name" rules="alpha" v-slot="{ errors }">
+          <input type="text" class="form-control" v-model="user.first_name">
+          <span>{{ errors[0] }}</span>
+        </ValidationProvider>
       </div>
       <div class="form-group">
         <label>Last name:</label>
-        <input type="text" class="form-control" v-model="user.last_name">
+        <ValidationProvider name="Last name" rules="alpha" v-slot="{ errors }">
+          <input type="text" class="form-control" v-model="user.last_name">
+          <span>{{ errors[0] }}</span>
+        </ValidationProvider>
       </div>
       <div class="form-group">
         <label>Email:</label>
-        <input type="text" class="form-control" v-model="user.email">
+        <ValidationProvider name="email" rules="required|email" v-slot="{ errors }">
+          <input type="text" class="form-control" v-model="user.email">
+          <span>{{ errors[0] }}</span>
+        </ValidationProvider>
       </div>
       <div class="form-group">
         <label>Old password:</label>
         <input type="password" class="form-control" v-model="oldPassword">
       </div>
-      <div class="form-group">
-        <label>New password:</label>
-        <input type="password" class="form-control" v-model="password">
-      </div>
-      <div class="form-group">
-        <label>Password confirmation:</label>
-        <input type="password" class="form-control" v-model="passwordConfirmation">
-        <small v-show="(password.length > 0) && (passwordConfirmation.length > 0) && (passwordConfirmation !== password)">Password doesn't match</small>
-      </div>
+      <ValidationObserver>
+        <div class="form-group">
+          <label>New password:</label>
+          <ValidationProvider v-slot="{ errors }" vid="confirmation">
+            <input type="password" class="form-control" v-model="password">
+            <span>{{ errors[0] }}</span>
+          </ValidationProvider>
+        </div>
+        <div class="form-group">
+          <label>Password confirmation:</label>
+          <ValidationProvider rules="confirmed:confirmation" v-slot="{ errors }">
+            <input type="password" class="form-control" v-model="passwordConfirmation">
+            <span>{{ errors[0] }}</span>
+          </ValidationProvider>
+        </div>
+      </ValidationObserver>
       <div class="form-group">
         <label>Birthday:</label>
-        <input type="text" class="form-control" v-model="user.birthday">
+        <ValidationProvider size="10" maxlength="10" name="birthday" v-slot="{ errors }">
+          <input type="text" class="form-control" v-model="user.birthday">
+          <span>{{ errors[0] }}</span>
+        </ValidationProvider>
       </div>
       <div class="form-group">
         <label>House number:</label>
-        <ValidationProvider v-slot="{ errors }">
+        <ValidationProvider name="House number" rules="numeric" v-slot="{ errors }">
           <input type="text" size="5" maxlength="5" class="form-control" v-model="user.street_num">
           <span>{{ errors[0] }}</span>
         </ValidationProvider>
       </div>
       <div class="form-group">
         <label>Direction:</label>
-        <input type="text" size="1" maxlength="1" class="form-control" v-model="user.street_direction">
-      </div>
+        <select name="direction" id="direction" v-model="user.street_direction">
+          <option value="N">N</option>
+          <option value="S">S</option>
+          <option value="E">E</option>
+          <option value="W">W</option>
+        </select>
+       </div>
       <div class="form-group">
         <label>Street:</label>
-        <input type="text" size="40" maxlength="50" class="form-control" v-model="user.street">
+        <input type="text" maxlength="45" class="form-control" v-model="user.street">
       </div>
       <div class="form-group">
-        <label>ZIP Code:</label>
-        <input type="text" size="5" maxlength="5" class="form-control" v-model="user.zip_code">
+        <label>ZIP code:</label>
+        <ValidationProvider name="ZIP code" rules="numeric" v-slot="{ errors }">
+          <input type="text" size="5" maxlength="5" class="form-control" v-model="user.zip_code">
+          <span>{{ errors[0] }}</span>
+        </ValidationProvider>
       </div>
       <div class="form-group">
         <label>Image URL:</label>
@@ -75,20 +102,41 @@
 </template>
 
 <script>
+import Vue from "vue";
 import axios from "axios";
-import { ValidationProvider, extend } from "vee-validate";
-import { required, email } from "vee-validate/dist/rules";
-
-// extend("max", {
-//   validate(value, args) {
-//     return value.length <= args.length;
-//   },
-//   params: ["length"]
-// });
-
+import { ValidationProvider, ValidationObserver } from "vee-validate";
+import {
+  required,
+  email,
+  numeric,
+  alpha,
+  confirmed
+} from "vee-validate/dist/rules";
+import { extend } from "vee-validate";
+extend("email", {
+  ...email,
+  message: "Invalid email"
+});
+extend("alpha", {
+  ...alpha,
+  message: "Field may only contain alphabetic characters"
+});
+extend("numeric", {
+  ...numeric,
+  message: "Field may only contain numeric characters"
+});
+extend("confirmed", {
+  ...confirmed,
+  message: "Password confirmation must match password"
+});
+extend("required", {
+  ...required,
+  message: "This field is required"
+});
 export default {
   components: {
-    ValidationProvider
+    ValidationProvider,
+    ValidationObserver
   },
   data: function() {
     return {
