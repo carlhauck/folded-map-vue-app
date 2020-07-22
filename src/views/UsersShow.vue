@@ -1,8 +1,9 @@
 <template>
-  <div class="home">
+  <div class="users-show">
     <img :src="user.image_url" :alt="user.display_name">
-    <h2>{{ user.display_name }} – {{ getAge(user.birthday) }}</h2>
-    <p>{{ user.block_ns }} {{ user.block_ew }}</p>
+    <h2>{{ user.display_name }}</h2>
+    <p><strong>Age:</strong> {{ getAge(user.birthday) }}</p>
+    <p><strong>Block:</strong> {{ user.block_ns }} {{ user.block_ew }}</p>
     <h4>How I came to live in my neighborhood:</h4>
     <p>{{ user.how_i_got_here }}</p>
     <h4>What I like about where I live:</h4>
