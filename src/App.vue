@@ -3,7 +3,8 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
-      <router-link v-if="isLoggedIn()" to="/conversations">Conversations</router-link>
+      <router-link v-if="isLoggedIn()" to="/conversations">Conversations</router-link> |
+      <router-link v-if="isLoggedIn()" to="/profile">Profile</router-link> |
       <router-link v-if="!isLoggedIn()" to="/signup">Signup</router-link> |
       <router-link v-if="!isLoggedIn()" to="/login">Login</router-link> |
       <router-link v-if="isLoggedIn()" to="/logout">Logout</router-link>

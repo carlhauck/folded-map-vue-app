@@ -9,6 +9,7 @@ import UsersShow from '../views/UsersShow.vue';
 import UsersEdit from '../views/UsersEdit.vue';
 import ConversationsIndex from '../views/ConversationsIndex.vue';
 import ConversationsShow from '../views/ConversationsShow.vue';
+import ProfileShow from '../views/ProfileShow.vue';
 
 Vue.use(VueRouter);
 
@@ -57,6 +58,11 @@ const routes = [
     path: '/conversations/:id',
     name: 'conversations-show',
     component: ConversationsShow
+  },
+  {
+    path: '/profile',
+    name: 'profile-show',
+    component: ProfileShow
   }
 ];
 
