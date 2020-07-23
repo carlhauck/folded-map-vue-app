@@ -96,8 +96,9 @@
         <label>What you'd change about where you live:</label>
         <input type="text" class="form-control" v-model="user.what_i_would_change">
       </div>
-      <input type="submit" class="btn btn-primary" value="Update">
+      <input type="submit" class="btn btn-primary" value="Update Profile">
     </form>
+    <button v-on:click="destroyUser()">Delete Account</button>
   </div>
 </template>
 
@@ -110,50 +111,50 @@ import {
   email,
   numeric,
   alpha,
-  confirmed
+  confirmed,
 } from "vee-validate/dist/rules";
 import { extend } from "vee-validate";
 extend("email", {
   ...email,
-  message: "Invalid email"
+  message: "Invalid email",
 });
 extend("alpha", {
   ...alpha,
-  message: "Field may only contain alphabetic characters"
+  message: "Field may only contain alphabetic characters",
 });
 extend("numeric", {
   ...numeric,
-  message: "Field may only contain numeric characters"
+  message: "Field may only contain numeric characters",
 });
 extend("confirmed", {
   ...confirmed,
-  message: "Password confirmation must match password"
+  message: "Password confirmation must match password",
 });
 extend("required", {
   ...required,
-  message: "This field is required"
+  message: "This field is required",
 });
 export default {
   components: {
     ValidationProvider,
-    ValidationObserver
+    ValidationObserver,
   },
-  data: function() {
+  data: function () {
     return {
       errors: [],
       user: {},
       oldPassword: "",
       password: "",
-      passwordConfirmation: ""
+      passwordConfirmation: "",
     };
   },
-  created: function() {
-    axios.get(`/api/users/${this.$route.params.id}`).then(response => {
+  created: function () {
+    axios.get(`/api/users/${this.$route.params.id}`).then((response) => {
       this.user = response.data;
     });
   },
   methods: {
-    updateUser: function() {
+    updateUser: function () {
       var params = {
         first_name: this.user.first_name,
         last_name: this.user.last_name,
@@ -169,17 +170,28 @@ export default {
         image_url: this.user.image_url,
         how_i_got_here: this.user.how_i_got_here,
         what_i_like: this.user.what_i_like,
-        what_i_would_change: this.user.what_i_would_change
+        what_i_would_change: this.user.what_i_would_change,
       };
       axios
         .patch(`/api/users/${this.user.id}`, params)
-        .then(response => {
+        .then((response) => {
           this.$router.push(`/users/${response.data.id}`);
         })
-        .catch(error => {
+        .catch((error) => {
           this.errors = error.response.data.errors;
         });
-    }
-  }
+    },
+    destroyUser: function () {
+      if (
+        confirm(
+          "Are you sure you want to delete your account? This cannot be undone."
+        )
+      ) {
+        axios.delete(`api/users/${this.user.id}`).then((response) => {
+          this.$router.push("/");
+        });
+      }
+    },
+  },
 };
 </script>

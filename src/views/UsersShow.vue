@@ -10,6 +10,7 @@
     <p>{{ user.what_i_like }}</p>
     <h4>What I'd like to change about where I live:</h4>
     <p>{{ user.what_i_would_change }}</p>
+    <router-link class="nav-link" :to="`/users/${user.id}/edit`">Edit Profile</router-link>
   </div>
 </template>
 
