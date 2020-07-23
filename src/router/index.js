@@ -7,6 +7,8 @@ import Login from '../views/Login.vue';
 import Logout from '../views/Logout.vue';
 import UsersShow from '../views/UsersShow.vue';
 import UsersEdit from '../views/UsersEdit.vue';
+import ConversationsIndex from '../views/ConversationsIndex.vue';
+import ConversationsShow from '../views/ConversationsShow.vue';
 
 Vue.use(VueRouter);
 
@@ -45,6 +47,16 @@ const routes = [
     path: '/users/:id/edit',
     name: 'users-edit',
     component: UsersEdit
+  },
+  {
+    path: '/conversations',
+    name: 'conversations-index',
+    component: ConversationsIndex
+  },
+  {
+    path: '/conversations/:id',
+    name: 'conversations-show',
+    component: ConversationsShow
   }
 ];
 
