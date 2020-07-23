@@ -20,22 +20,21 @@
 import axios from "axios";
 import moment from "moment";
 export default {
-  data: function() {
+  data: function () {
     return {
       user: {},
-      age: ""
     };
   },
-  created: function() {
-    axios.get(`/api/users/${this.$route.params.id}`).then(response => {
+  created: function () {
+    axios.get(`/api/users/${this.$route.params.id}`).then((response) => {
       this.user = response.data;
     });
   },
   methods: {
-    getAge: function(date) {
+    getAge: function (date) {
       var years = moment().diff(date, "years");
       return years;
-    }
-  }
+    },
+  },
 };
 </script>
