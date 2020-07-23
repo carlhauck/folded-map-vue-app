@@ -7,10 +7,11 @@
 import axios from "axios";
 
 export default {
-  created: function() {
+  created: function () {
     delete axios.defaults.headers.common["Authorization"];
     localStorage.removeItem("jwt");
+    localStorage.removeItem("user_id");
     this.$router.push("/");
-  }
+  },
 };
 </script>
