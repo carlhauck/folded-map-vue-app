@@ -24,11 +24,10 @@ export default {
   data: function () {
     return {
       current_user: {},
-      current_user_id: localStorage.getItem("user_id"),
     };
   },
   created: function () {
-    axios.get(`/api/users/${this.current_user_id}`).then((response) => {
+    axios.get(`/api/users/${this.$parent.getUserId()}`).then((response) => {
       this.current_user = response.data;
     });
   },

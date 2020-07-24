@@ -6,14 +6,14 @@
     <div v-for="post in posts">
       <router-link class="nav-link" :to="`/users/${post.user_id}`"><img class="convo-prof" :src="post.user_image" :alt="post.user"></router-link>
       <h2><router-link class="nav-link" :to="`/users/${post.user_id}`">{{ post.user }}</router-link></h2>
-      <small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.user_id == current_user_id"> | Edit post | Delete post</span></small>
+      <small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.user_id == $parent.getUserId()"> | Edit post | Delete post</span></small>
       <h3>{{ post.text }}</h3>
       <p v-if="post.image_url"><img class="post-pic" :src="post.image_url"></p>
       <small>{{ post.comments.length }} comments</small>
       <div v-for="comment in post.comments">
         <router-link class="nav-link" :to="`/users/${comment.user_id}`"><img class="comment-prof" :src="comment.user_image" :alt="post.user"></router-link>
         <h4><router-link class="nav-link" :to="`/users/${comment.user_id}`">{{ comment.user }}</router-link></h4>
-        <small>{{ postedRelativeTime(comment.created_at) }}<span v-if="comment.user_id == current_user_id"> | Edit comment | Delete comment</span></small>
+        <small>{{ postedRelativeTime(comment.created_at) }}<span v-if="comment.user_id == $parent.getUserId()"> | Edit comment | Delete comment</span></small>
         <h5>{{ comment.text }}</h5>
       </div>
       <form v-on:submit.prevent="createComment(post)">
@@ -59,12 +59,11 @@ export default {
       block_pair: {},
       posts: [],
       users: [],
-      current_user_id: localStorage.getItem("user_id"),
       newComment: "",
     };
   },
   mounted: function () {
-    axios.get(`/api/users/${this.current_user_id}`).then((response) => {
+    axios.get(`/api/users/${this.$parent.getUserId()}`).then((response) => {
       this.current_user = response.data;
     });
   },

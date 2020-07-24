@@ -143,14 +143,13 @@ export default {
     return {
       errors: [],
       user: {},
-      user_id: localStorage.getItem("user_id"),
       oldPassword: "",
       password: "",
       passwordConfirmation: "",
     };
   },
   created: function () {
-    axios.get(`/api/users/${this.user_id}`).then((response) => {
+    axios.get(`/api/users/${this.$parent.getUserId()}`).then((response) => {
       this.user = response.data;
     });
   },

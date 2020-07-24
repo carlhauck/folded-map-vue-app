@@ -10,7 +10,7 @@
     <p>{{ user.what_i_like }}</p>
     <h4>What I'd like to change about where I live:</h4>
     <p>{{ user.what_i_would_change }}</p>
-    <router-link v-if="user.id == current_user_id" class="nav-link" :to="`/users/${current_user_id}/edit`">Edit Profile</router-link>
+    <router-link v-if="user.id == $parent.getUserId()" class="nav-link" :to="`/users/${user.id}/edit`">Edit Profile</router-link>
   </div>
 </template>
 
@@ -24,7 +24,6 @@ export default {
   data: function () {
     return {
       user: {},
-      current_user_id: localStorage.getItem("user_id"),
     };
   },
   created: function () {
