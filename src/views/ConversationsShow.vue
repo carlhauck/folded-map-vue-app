@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     sentRelativeTime: function (date) {
-      return moment(date, "YYYYMMDD").fromNow();
+      return moment.utc(date).fromNow();
     },
     createMessage: function () {
       var params = {
@@ -59,14 +59,14 @@ export default {
         text: this.newMessage,
       };
       axios
-        .post("/api/conversations", params)
+        .post("/api/messages", params)
         .then((response) => {
           this.messages.push(response.data);
           this.newMessage = "";
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
-          console.log(error.response.data);
+          console.log(error);
         });
     },
   },

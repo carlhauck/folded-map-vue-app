@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     postedRelativeTime: function (date) {
-      return moment(date, "YYYYMMDD").fromNow();
+      return moment.utc(date).fromNow();
     },
   },
 };
