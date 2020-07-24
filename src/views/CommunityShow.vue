@@ -2,30 +2,26 @@
   <div class="community-show">
     <h1>{{ block_pair.ns_max }} N/S | {{ block_pair.ew_max }} W</h1>
 
-    <!-- <form v-on:submit.prevent="createPost()">
+    <form v-on:submit.prevent="createPost()">
+      <!-- Will eventually put this into a modal -->
       <h3>Create post...</h3>
-      <textarea v-model="newPost" placeholder="Type post here..." rows="10" cols="50"></textarea>
-      <input type="text" v-model="newPostImageUrl"></input>
-      <button v-on:click="createPost()">Publish</button>
+      <p><textarea v-model="newPost" placeholder="Type post here..." rows="5" cols="50"></textarea></p>
+      <p><input type="text" size="50" v-model="newPostImageUrl" placeholder="Paste image URL (optional)..."></p>
+      <input type="submit" value="Publish">
     </form>
-    
-    <form v-on:submit.prevent="createComment(post)">
-        <textarea v-model="newComment" :placeholder="`Comment on ${post.user_first_name}'s post...`" rows="3" cols="50"></textarea>
-        <input type="submit" value="Send">
-      </form> -->
 
     <h1>Posts</h1>
     <div v-for="post in posts">
       <router-link class="nav-link" :to="`/users/${post.user_id}`"><img class="convo-prof" :src="post.user_image" :alt="post.user"></router-link>
       <h2><router-link class="nav-link" :to="`/users/${post.user_id}`">{{ post.user }}</router-link></h2>
-      <small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.user_id == $parent.getUserId()"> | Edit post | Delete post</span></small>
+      <small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.user_id == $parent.getUserId()"> | Edit post | <span v-on:click="destroyPost(post)">Delete post</span></span></small>
       <h3>{{ post.text }}</h3>
       <p v-if="post.image_url"><img class="post-pic" :src="post.image_url"></p>
       <small>{{ post.comments.length }} comments</small>
       <div v-for="comment in post.comments">
         <router-link class="nav-link" :to="`/users/${comment.user_id}`"><img class="comment-prof" :src="comment.user_image" :alt="post.user"></router-link>
         <h4><router-link class="nav-link" :to="`/users/${comment.user_id}`">{{ comment.user }}</router-link></h4>
-        <small>{{ postedRelativeTime(comment.created_at) }}<span v-if="comment.user_id == $parent.getUserId()"> | Edit comment | Delete comment</span></small>
+        <small>{{ postedRelativeTime(comment.created_at) }}<span v-if="comment.user_id == $parent.getUserId()"> | Edit comment | <span v-on:click="destroyComment(post, comment)">Delete comment</span></span></small>
         <h5>{{ comment.text }}</h5>
       </div>
       <form v-on:submit.prevent="createComment(post)">
@@ -115,6 +111,14 @@ export default {
           console.log(error);
         });
     },
+    destroyPost: function (post) {
+      var postIndex = this.posts.findIndex((obj) => obj.id === post.id);
+      if (confirm("Are you sure you want to delete this post?")) {
+        axios.delete(`api/posts/${post.id}`).then((response) => {
+          this.posts.splice(postIndex, 1);
+        });
+      }
+    },
     createComment: function (post) {
       var postIndex = this.posts.findIndex((obj) => obj.id === post.id);
       var params = {
@@ -132,6 +136,17 @@ export default {
           this.errors = error.response.data.errors;
           console.log(error);
         });
+    },
+    destroyComment: function (post, comment) {
+      var postIndex = this.posts.findIndex((obj) => obj.id === post.id);
+      var commentIndex = this.posts[postIndex].comments.findIndex(
+        (obj) => obj.id === comment.id
+      );
+      if (confirm("Are you sure you want to delete this comment?")) {
+        axios.delete(`api/comments/${comment.id}`).then((response) => {
+          this.posts[postIndex].comments.splice(commentIndex, 1);
+        });
+      }
     },
   },
 };
