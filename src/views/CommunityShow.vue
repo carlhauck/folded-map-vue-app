@@ -1,13 +1,14 @@
 <template>
   <div class="community-show">
     <h1>{{ block_pair.ns_max }} N/S | {{ block_pair.ew_max }} W</h1>
+    <button>Create post</button>
     <h1>Posts</h1>
     <div v-for="post in posts">
       <router-link class="nav-link" :to="`/users/${post.user_id}`"><img class="convo-prof" :src="post.user_image" :alt="post.user"></router-link>
       <h2><router-link class="nav-link" :to="`/users/${post.user_id}`">{{ post.user }}</router-link></h2>
       <small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.user_id == current_user_id"> | Edit post | Delete post</span></small>
       <h3>{{ post.text }}</h3>
-      <img v-if="post.image_url" class="post-pic" :src="post.image_url">
+      <p v-if="post.image_url"><img class="post-pic" :src="post.image_url"></p>
       <small>{{ post.comments.length }} comments</small>
       <div v-for="comment in post.comments">
         <router-link class="nav-link" :to="`/users/${comment.user_id}`"><img class="comment-prof" :src="comment.user_image" :alt="post.user"></router-link>
@@ -15,6 +16,10 @@
         <small>{{ postedRelativeTime(comment.created_at) }}<span v-if="comment.user_id == current_user_id"> | Edit comment | Delete comment</span></small>
         <h5>{{ comment.text }}</h5>
       </div>
+      <form v-on:submit.prevent="createComment(post)">
+        <textarea v-model="newComment" :placeholder="`Comment on ${post.user_first_name}'s post...`" rows="3" cols="50"></textarea>
+        <input type="submit" value="Send">
+      </form>
     </div>
     <h1>Members</h1>
     <!-- Add computed/method to show only OTHER users in block pair? -->
@@ -55,6 +60,7 @@ export default {
       posts: [],
       users: [],
       current_user_id: localStorage.getItem("user_id"),
+      newComment: "",
     };
   },
   mounted: function () {
@@ -75,6 +81,24 @@ export default {
   methods: {
     postedRelativeTime: function (date) {
       return moment.utc(date).fromNow();
+    },
+    createComment: function (post) {
+      var postIndex = this.posts.findIndex((obj) => obj.id === post.id);
+      var params = {
+        post_id: post.id,
+        text: this.newComment,
+      };
+      axios
+        .post("/api/comments", params)
+        .then((response) => {
+          console.log(postIndex);
+          this.posts[postIndex].comments.push(response.data);
+          this.newComment = "";
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+          console.log(error);
+        });
     },
   },
 };

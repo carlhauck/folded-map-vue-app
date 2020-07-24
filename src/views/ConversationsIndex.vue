@@ -3,8 +3,9 @@
     <div v-for="conversation in conversations">
       <img class="convo-prof" :src="conversation.partner.image_url" :alt="conversation.partner.display_name">
       <h3>{{ conversation.partner.display_name }}</h3>
-      <!-- <p>{{ conversation.messages[conversation.messages.length - 1]["created_at"] }}</p> -->
-      <p>{{ conversation.messages[conversation.messages.length - 1] }}</p>
+      <!-- <p>{{ conversation.messages[0].text }}</p> -->
+      <!-- <p>{{ conversation.messages[conversation.messages.length - 1] }}</p> -->
+      <!-- <p>{{ conversation.last_message.text }}</p> -->
       <router-link class="nav-link" :to="`/conversations/${conversation.id}`">See Conversation</router-link>
     </div>
   </div>
@@ -28,13 +29,13 @@ export default {
       conversations: [],
     };
   },
-  mounted: function () {},
-  created: function () {
+  mounted: function () {
     axios.get("/api/conversations").then((response) => {
       console.log(response.data);
       this.conversations = response.data;
     });
   },
+  created: function () {},
   methods: {},
 };
 </script>
