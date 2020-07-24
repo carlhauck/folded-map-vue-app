@@ -1,12 +1,11 @@
 <template>
   <div class="conversations-index">
     <div v-for="conversation in conversations">
-      <img class="convo-prof" :src="conversation.partner.image_url" :alt="conversation.partner.display_name">
-      <h3>{{ conversation.partner.display_name }}</h3>
-      <!-- <p>{{ conversation.messages[0].text }}</p> -->
-      <!-- <p>{{ conversation.messages[conversation.messages.length - 1] }}</p> -->
-      <!-- <p>{{ conversation.last_message.text }}</p> -->
-      <router-link class="nav-link" :to="`/conversations/${conversation.id}`">See Conversation</router-link>
+        <img class="convo-prof" :src="conversation.partner.image_url" :alt="conversation.partner.display_name">
+        <h3>{{ conversation.partner.display_name }}</h3>
+        <p>{{ conversation.last_message.text }}</p>
+        <p>{{ sentRelativeTime(conversation.last_message.created_at) }}</p>
+        <router-link class="nav-link" :to="`/conversations/${conversation.id}`">See Conversation</router-link>
     </div>
   </div>
 </template>
@@ -23,19 +22,24 @@ img.convo-prof {
 
 <script>
 import axios from "axios";
+import moment from "moment";
 export default {
   data: function () {
     return {
       conversations: [],
     };
   },
-  mounted: function () {
+  mounted: function () {},
+  created: function () {
     axios.get("/api/conversations").then((response) => {
       console.log(response.data);
       this.conversations = response.data;
     });
   },
-  created: function () {},
-  methods: {},
+  methods: {
+    sentRelativeTime: function (date) {
+      return moment.utc(date).fromNow();
+    },
+  },
 };
 </script>

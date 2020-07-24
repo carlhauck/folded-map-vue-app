@@ -1,7 +1,19 @@
 <template>
   <div class="community-show">
     <h1>{{ block_pair.ns_max }} N/S | {{ block_pair.ew_max }} W</h1>
-    <button>Create post</button>
+
+    <!-- <form v-on:submit.prevent="createPost()">
+      <h3>Create post...</h3>
+      <textarea v-model="newPost" placeholder="Type post here..." rows="10" cols="50"></textarea>
+      <input type="text" v-model="newPostImageUrl"></input>
+      <button v-on:click="createPost()">Publish</button>
+    </form>
+    
+    <form v-on:submit.prevent="createComment(post)">
+        <textarea v-model="newComment" :placeholder="`Comment on ${post.user_first_name}'s post...`" rows="3" cols="50"></textarea>
+        <input type="submit" value="Send">
+      </form> -->
+
     <h1>Posts</h1>
     <div v-for="post in posts">
       <router-link class="nav-link" :to="`/users/${post.user_id}`"><img class="convo-prof" :src="post.user_image" :alt="post.user"></router-link>
@@ -60,6 +72,8 @@ export default {
       posts: [],
       users: [],
       newComment: "",
+      newPost: "",
+      newPostImageUrl: "",
     };
   },
   mounted: function () {
@@ -80,6 +94,26 @@ export default {
   methods: {
     postedRelativeTime: function (date) {
       return moment.utc(date).fromNow();
+    },
+    showCreate: function () {
+      document.querySelector("post-create").showModal();
+    },
+    createPost: function () {
+      var params = {
+        text: this.newPost,
+        image_url: this.newPostImageUrl,
+      };
+      axios
+        .post("/api/posts", params)
+        .then((response) => {
+          this.posts.push(response.data);
+          this.newPost = "";
+          this.newPostImageUrl = "";
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+          console.log(error);
+        });
     },
     createComment: function (post) {
       var postIndex = this.posts.findIndex((obj) => obj.id === post.id);
