@@ -176,7 +176,7 @@ export default {
       axios
         .patch(`/api/users/${this.user.id}`, params)
         .then((response) => {
-          this.$router.push(`/users/${response.data.id}`);
+          this.$router.push("/profile");
         })
         .catch((error) => {
           this.errors = error.response.data.errors;

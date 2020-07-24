@@ -1,16 +1,16 @@
 <template>
   <div class="users-show">
-    <img :src="user.image_url" :alt="user.display_name">
-    <h2>{{ user.display_name }}</h2>
-    <p><strong>Age:</strong> {{ getAge(user.birthday) }}</p>
-    <p><strong>Block:</strong> {{ user.block_ns }} {{ user.block_ew }}</p>
+    <img :src="current_user.image_url" :alt="current_user.display_name">
+    <h2>{{ current_user.display_name }}</h2>
+    <p><strong>Age:</strong> {{ getAge(current_user.birthday) }}</p>
+    <p><strong>Block:</strong> {{ current_user.block_ns }} {{ current_user.block_ew }}</p>
     <h4>How I came to live in my neighborhood:</h4>
-    <p>{{ user.how_i_got_here }}</p>
+    <p>{{ current_user.how_i_got_here }}</p>
     <h4>What I like about where I live:</h4>
-    <p>{{ user.what_i_like }}</p>
+    <p>{{ current_user.what_i_like }}</p>
     <h4>What I'd like to change about where I live:</h4>
-    <p>{{ user.what_i_would_change }}</p>
-    <router-link class="nav-link" :to="`/users/${user.id}/edit`">Edit Profile</router-link>
+    <p>{{ current_user.what_i_would_change }}</p>
+    <router-link class="nav-link" :to="`/users/${current_user.id}/edit`">Edit Profile</router-link>
   </div>
 </template>
 
@@ -23,13 +23,13 @@ import moment from "moment";
 export default {
   data: function () {
     return {
-      user: {},
-      user_id: localStorage.getItem("user_id"),
+      current_user: {},
+      current_user_id: localStorage.getItem("user_id"),
     };
   },
   created: function () {
-    axios.get(`/api/users/${this.user_id}`).then((response) => {
-      this.user = response.data;
+    axios.get(`/api/users/${this.current_user_id}`).then((response) => {
+      this.current_user = response.data;
     });
   },
   methods: {
