@@ -2,6 +2,7 @@
   <div class="users-show">
     <img :src="user.image_url" :alt="user.display_name">
     <h2>{{ user.display_name }}</h2>
+    <button v-if="user.id != $parent.getUserId()" v-on:click="createConversation()">Message {{ user.first_name }}</button>
     <p><strong>Age:</strong> {{ getAge(user.birthday) }}</p>
     <p><strong>Block:</strong> {{ user.block_ns }} {{ user.block_ew }}</p>
     <h4>How I came to live in my neighborhood:</h4>
@@ -24,6 +25,7 @@ export default {
   data: function () {
     return {
       user: {},
+      errors: [],
     };
   },
   created: function () {
@@ -35,6 +37,20 @@ export default {
     getAge: function (date) {
       var years = moment().diff(date, "years");
       return years;
+    },
+    createConversation: function () {
+      var params = {
+        recipient_id: this.user.id,
+      };
+      axios
+        .post("/api/conversations", params)
+        .then((response) => {
+          console.log(response.data.id);
+          this.$router.push(`/conversations/${response.data.id}`);
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+        });
     },
   },
 };

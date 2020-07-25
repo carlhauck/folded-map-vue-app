@@ -48,10 +48,7 @@
       </ValidationObserver>
       <div class="form-group">
         <label>Birthday:</label>
-        <ValidationProvider size="10" maxlength="10" name="birthday" v-slot="{ errors }">
-          <input type="text" class="form-control" v-model="user.birthday">
-          <span>{{ errors[0] }}</span>
-        </ValidationProvider>
+        <input type="date" class="form-control" v-model="user.birthday">
       </div>
       <div class="form-group">
         <label>House number:</label>
