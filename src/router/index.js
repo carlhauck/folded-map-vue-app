@@ -11,6 +11,7 @@ import ConversationsIndex from '../views/ConversationsIndex.vue';
 import ConversationsShow from '../views/ConversationsShow.vue';
 import ProfileShow from '../views/ProfileShow.vue';
 import CommunityShow from '../views/CommunityShow.vue';
+import PostsShow from '../views/PostsShow.vue';
 
 Vue.use(VueRouter);
 
@@ -69,7 +70,12 @@ const routes = [
     path: '/community',
     name: 'community-show',
     component: CommunityShow
-  }
+  },
+  {
+    path: '/posts/:id',
+    name: 'posts-show',
+    component: PostsShow
+  },
 ];
 
 const router = new VueRouter({
