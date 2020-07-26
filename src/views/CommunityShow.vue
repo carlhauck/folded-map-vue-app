@@ -14,10 +14,10 @@
     <div v-for="post in posts">
       <router-link class="nav-link" :to="`/users/${post.user_id}`"><img class="convo-prof" :src="post.user_image" :alt="post.user"></router-link>
       <h2><router-link class="nav-link" :to="`/users/${post.user_id}`">{{ post.user }}</router-link></h2>
-      <small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.user_id == $parent.getUserId()"> | Edit post | <span v-on:click="destroyPost(post)">Delete post</span></span></small>
+      <small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.user_id == $parent.getUserId()"> | <router-link class="nav-link" :to="`/posts/${post.id}/edit`">Edit post</router-link> | <span v-on:click="destroyPost(post)">Delete post</span></span></small>
       <h3>{{ post.text }}</h3>
       <p v-if="post.image_url"><img class="post-pic" :src="post.image_url"></p>
-      <small>{{ post.comments.length }} comments</small>
+      <small><router-link class="nav-link" :to="`/posts/${post.id}`">{{ post.comments.length }} comments</router-link></small>
       <div v-for="comment in post.comments">
         <p><router-link class="nav-link" :to="`/users/${comment.user_id}`"><img class="comment-prof" :src="comment.user_image" :alt="post.user"></router-link></p>
         <h4><router-link class="nav-link" :to="`/users/${comment.user_id}`">{{ comment.user }}</router-link></h4>
@@ -43,22 +43,6 @@
 </template>
 
 <style>
-/* TEMPORARY */
-img.convo-prof {
-  border-radius: 50%;
-  width: 70px;
-  height: 70px;
-  object-fit: cover;
-}
-img.comment-prof {
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-}
-img.post-pic {
-  width: 125px;
-}
 </style>
 
 <script>

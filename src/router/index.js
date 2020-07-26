@@ -12,6 +12,7 @@ import ConversationsShow from '../views/ConversationsShow.vue';
 import ProfileShow from '../views/ProfileShow.vue';
 import CommunityShow from '../views/CommunityShow.vue';
 import PostsShow from '../views/PostsShow.vue';
+import PostsEdit from '../views/PostsEdit.vue';
 
 Vue.use(VueRouter);
 
@@ -75,6 +76,11 @@ const routes = [
     path: '/posts/:id',
     name: 'posts-show',
     component: PostsShow
+  },
+  {
+    path: '/posts/:id/edit',
+    name: 'posts-edit',
+    component: PostsEdit
   },
 ];
 

@@ -2,7 +2,7 @@
   <div class="posts-show">
       <router-link class="nav-link" :to="`/users/${post.user_id}`"><img class="convo-prof" :src="post.user_image" :alt="post.user"></router-link>
       <h2><router-link class="nav-link" :to="`/users/${post.user_id}`">{{ post.user }}</router-link></h2>
-      <small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.user_id == $parent.getUserId()"> | Edit post | <span v-on:click="destroyPost(post)">Delete post</span></span></small>
+      <small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.user_id == $parent.getUserId()"> | <router-link class="nav-link" :to="`/posts/${post.id}/edit`">Edit post</router-link> | <span v-on:click="destroyPost(post)">Delete post</span></span></small>
       <h3>{{ post.text }}</h3>
       <p v-if="post.image_url"><img class="post-pic" :src="post.image_url"></p>
       <small>{{ comments.length }} comments</small>
@@ -24,22 +24,6 @@
 </template>
 
 <style>
-/* TEMPORARY */
-img.convo-prof {
-  border-radius: 50%;
-  width: 70px;
-  height: 70px;
-  object-fit: cover;
-}
-img.comment-prof {
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-}
-img.post-pic {
-  width: 125px;
-}
 </style>
 
 <script>

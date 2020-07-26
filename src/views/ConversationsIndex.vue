@@ -12,13 +12,6 @@
 </template>
 
 <style>
-/* TEMPORARY */
-img.convo-prof {
-  border-radius: 50%;
-  width: 70px;
-  height: 70px;
-  object-fit: cover;
-}
 </style>
 
 <script>

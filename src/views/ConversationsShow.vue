@@ -2,7 +2,7 @@
   <div class="conversations-show">
     <img class="convo-prof" :src="partner.image_url" :alt="partner.display_name">
     <h3>Conversation w/ {{ partner.display_name }}</h3>
-    <router-link class="nav-link" :to="`/users/${partner.id}`">See Profile</router-link>
+    <p><router-link class="nav-link" :to="`/users/${partner.id}`">See Profile</router-link></p>
     <div v-for="message in messages">
       <img class="convo-prof" :src="message.user_image" :alt="message.user">
       <p>{{ message.text }}</p>
@@ -16,13 +16,6 @@
 </template>
 
 <style>
-/* TEMPORARY */
-img.convo-prof {
-  border-radius: 50%;
-  width: 70px;
-  height: 70px;
-  object-fit: cover;
-}
 </style>
 
 <script>

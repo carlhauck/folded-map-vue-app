@@ -35,6 +35,22 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+img.convo-prof {
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+}
+img.comment-prof {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+img.post-pic {
+  width: 125px;
+}
 </style>
 
 <script>
