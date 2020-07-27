@@ -14,24 +14,10 @@
     <div v-for="post in posts">
       <router-link class="nav-link" :to="`/users/${post.user_id}`"><img class="convo-prof" :src="post.user_image" :alt="post.user"></router-link>
       <h2><router-link class="nav-link" :to="`/users/${post.user_id}`">{{ post.user }}</router-link></h2>
-      <small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.user_id == $parent.getUserId()"> | <router-link class="nav-link" :to="`/posts/${post.id}/edit`">Edit post</router-link> | <span v-on:click="destroyPost(post)">Delete post</span></span></small>
+      <small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.created_at != post.updated_at"> | Edited {{ postedRelativeTime(post.updated_at) }}</span><span v-if="post.user_id == $parent.getUserId()"> | <router-link class="nav-link" :to="`/posts/${post.id}/edit`">Edit post</router-link> | <span v-on:click="destroyPost(post)">Delete post</span></span></small>
       <h3>{{ post.text }}</h3>
       <p v-if="post.image_url"><img class="post-pic" :src="post.image_url"></p>
-      <small><router-link class="nav-link" :to="`/posts/${post.id}`">{{ post.comments.length }} comments</router-link></small>
-      <div v-for="comment in post.comments">
-        <p><router-link class="nav-link" :to="`/users/${comment.user_id}`"><img class="comment-prof" :src="comment.user_image" :alt="post.user"></router-link></p>
-        <h4><router-link class="nav-link" :to="`/users/${comment.user_id}`">{{ comment.user }}</router-link></h4>
-        <h5 v-if="!(comment.id == commentBeingUpdated)">{{ comment.text }}</h5>
-        <p v-if="!(comment.id == commentBeingUpdated)"><small>{{ postedRelativeTime(comment.created_at) }}<span v-if="comment.user_id == $parent.getUserId()"> | <span v-on:click="showCommentUpdate(comment)">Edit comment</span> | <span v-on:click="destroyComment(post, comment)">Delete comment</span></span></small></p>
-        <form v-if="comment.id == commentBeingUpdated && updatedComment" v-on:submit.prevent="updateComment(post, comment)">
-          <textarea v-model="updatedComment" rows="3" cols="50"></textarea>
-          <input type="submit" value="Update">
-        </form>
-      </div>
-      <form v-on:submit.prevent="createComment(post)">
-        <textarea v-model="newComment" :placeholder="`Comment on ${post.user_first_name}'s post...`" rows="3" cols="50"></textarea>
-        <input type="submit" value="Send">
-      </form>
+      <p><small><router-link class="nav-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link></small></p>
     </div>
     <h1>Members</h1>
     <!-- Add computed/method to show only OTHER users in block pair? -->
