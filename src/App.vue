@@ -49,7 +49,7 @@ img.comment-prof {
   object-fit: cover;
 }
 img.post-pic {
-  width: 125px;
+  width: 200px;
 }
 </style>
 
