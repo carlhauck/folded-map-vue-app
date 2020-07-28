@@ -23,7 +23,6 @@ export default {
       post: {},
     };
   },
-  mounted: function () {},
   created: function () {
     axios.get(`/api/posts/${this.$route.params.id}`).then((response) => {
       console.log(response.data);

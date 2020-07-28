@@ -40,16 +40,14 @@ export default {
       commentBeingUpdated: null,
     };
   },
-  mounted: function () {
-    axios.get(`/api/users/${this.$parent.getUserId()}`).then((response) => {
-      this.current_user = response.data;
-    });
-  },
   created: function () {
     axios.get(`/api/posts/${this.$route.params.id}`).then((response) => {
       console.log(response.data);
       this.post = response.data;
       this.comments = response.data.comments;
+      axios.get(`/api/users/${this.$parent.getUserId()}`).then((response) => {
+        this.current_user = response.data;
+      });
     });
   },
   methods: {

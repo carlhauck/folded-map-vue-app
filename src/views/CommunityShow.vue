@@ -1,29 +1,31 @@
 <template>
   <div class="community-show">
-    <h1>{{ block_pair.ns_max }} N/S | {{ block_pair.ew_max }} W</h1>
+    <div v-if="block_pair.ns_max">
+      <h1>{{ block_pair.ns_max }} N/S | {{ block_pair.ew_max }} W</h1>
 
-    <form v-on:submit.prevent="createPost()">
-      <!-- Will eventually put this into a modal -->
-      <h3>Create post...</h3>
-      <p><textarea v-model="newPost" placeholder="Type post here..." rows="5" cols="50"></textarea></p>
-      <p><input type="text" size="50" v-model="newPostImageUrl" placeholder="Paste image URL (optional)..."></p>
-      <input type="submit" value="Publish">
-    </form>
+      <form v-on:submit.prevent="createPost()">
+        <!-- Will eventually put this into a modal -->
+        <h3>Create post...</h3>
+        <p><textarea v-model="newPost" placeholder="Type post here..." rows="5" cols="50"></textarea></p>
+        <p><input type="text" size="50" v-model="newPostImageUrl" placeholder="Paste image URL (optional)..."></p>
+        <input type="submit" value="Publish">
+      </form>
 
-    <h1>Posts</h1>
-    <div v-for="post in posts">
-      <router-link class="nav-link" :to="`/users/${post.user_id}`"><img class="convo-prof" v-if="post.user_image" :src="post.user_image" :alt="post.user"><img class="convo-prof" v-if="!post.user_image" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar"></router-link>
-      <h2><router-link class="nav-link" :to="`/users/${post.user_id}`">{{ post.user }}</router-link></h2>
-      <small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.created_at != post.updated_at"> | Edited {{ postedRelativeTime(post.updated_at) }}</span><span v-if="post.user_id == $parent.getUserId()"> | <router-link class="nav-link" :to="`/posts/${post.id}/edit`">Edit post</router-link> | <span v-on:click="destroyPost(post)">Delete post</span></span></small>
-      <h3>{{ post.text }}</h3>
-      <p v-if="post.image_url"><img class="post-pic" :src="post.image_url"></p>
-      <p><small><router-link class="nav-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link></small></p>
-    </div>
-    <h1>Members</h1>
-    <!-- Add computed/method to show only OTHER users in block pair? -->
-    <div v-for="user in users">
-      <router-link class="nav-link" :to="`/users/${user.id}`"><img class="convo-prof" v-if="user.image_url" :src="user.image_url" :alt="user.display_name"><img class="convo-prof" v-if="!user.image_url" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar"></router-link>
-      <h3><router-link class="nav-link" :to="`/users/${user.id}`">{{ user.display_name }}</router-link></h3>
+      <h1>Posts</h1>
+      <div v-for="post in posts">
+        <router-link class="nav-link" :to="`/users/${post.user_id}`"><img class="convo-prof" v-if="post.user_image" :src="post.user_image" :alt="post.user"><img class="convo-prof" v-if="!post.user_image" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar"></router-link>
+        <h2><router-link class="nav-link" :to="`/users/${post.user_id}`">{{ post.user }}</router-link></h2>
+        <small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.created_at != post.updated_at"> | Edited {{ postedRelativeTime(post.updated_at) }}</span><span v-if="post.user_id == $parent.getUserId()"> | <router-link class="nav-link" :to="`/posts/${post.id}/edit`">Edit post</router-link> | <span v-on:click="destroyPost(post)">Delete post</span></span></small>
+        <h3>{{ post.text }}</h3>
+        <p v-if="post.image_url"><img class="post-pic" :src="post.image_url"></p>
+        <p><small><router-link class="nav-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link></small></p>
+      </div>
+      <h1>Members</h1>
+      <!-- Add computed/method to show only OTHER users in block pair? -->
+      <div v-for="user in users">
+        <router-link class="nav-link" :to="`/users/${user.id}`"><img class="convo-prof" v-if="user.image_url" :src="user.image_url" :alt="user.display_name"><img class="convo-prof" v-if="!user.image_url" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar"></router-link>
+        <h3><router-link class="nav-link" :to="`/users/${user.id}`">{{ user.display_name }}</router-link></h3>
+      </div>
     </div>
   </div>
 </template>
@@ -48,19 +50,17 @@ export default {
       commentBeingUpdated: null,
     };
   },
-  mounted: function () {
+  created: function () {
     axios.get(`/api/users/${this.$parent.getUserId()}`).then((response) => {
       this.current_user = response.data;
+      axios
+        .get(`/api/block_pair/${this.current_user.block_pair_id}`)
+        .then((response) => {
+          this.block_pair = response.data;
+          this.posts = response.data.posts;
+          this.users = response.data.users;
+        });
     });
-  },
-  created: function () {
-    axios
-      .get(`/api/block_pair/${this.current_user.block_pair_id}`)
-      .then((response) => {
-        this.block_pair = response.data;
-        this.posts = response.data.posts;
-        this.users = response.data.users;
-      });
   },
   methods: {
     postedRelativeTime: function (date) {

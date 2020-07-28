@@ -23,10 +23,8 @@ export default {
       conversations: [],
     };
   },
-  mounted: function () {},
   created: function () {
     axios.get("/api/conversations").then((response) => {
-      console.log(response.data);
       this.conversations = response.data;
     });
   },
