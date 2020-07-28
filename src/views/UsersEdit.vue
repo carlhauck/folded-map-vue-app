@@ -20,6 +20,33 @@
         </ValidationProvider>
       </div>
       <div class="form-group">
+        <label>House number:</label>
+        <ValidationProvider name="House number" rules="numeric" v-slot="{ errors }">
+          <input type="text" size="5" maxlength="5" class="form-control" v-model="user.street_num">
+          <span>{{ errors[0] }}</span>
+        </ValidationProvider>
+      </div>
+      <div class="form-group">
+        <label>Street direction:</label>
+        <select name="direction" id="direction" v-model="user.street_direction">
+          <option value="N">N</option>
+          <option value="S">S</option>
+          <option value="E">E</option>
+          <option value="W">W</option>
+        </select>
+       </div>
+      <div class="form-group">
+        <label>Street:</label>
+        <input type="text" maxlength="45" class="form-control" v-model="user.street">
+      </div>
+      <div class="form-group">
+        <label>ZIP code:</label>
+        <ValidationProvider name="ZIP code" rules="numeric" v-slot="{ errors }">
+          <input type="text" size="5" maxlength="5" class="form-control" v-model="user.zip_code">
+          <span>{{ errors[0] }}</span>
+        </ValidationProvider>
+      </div>
+      <div class="form-group">
         <label>Email:</label>
         <ValidationProvider name="email" rules="required|email" v-slot="{ errors }">
           <input type="text" class="form-control" v-model="user.email">
@@ -49,33 +76,6 @@
       <div class="form-group">
         <label>Birthday:</label>
         <input type="date" class="form-control" v-model="user.birthday">
-      </div>
-      <div class="form-group">
-        <label>House number:</label>
-        <ValidationProvider name="House number" rules="numeric" v-slot="{ errors }">
-          <input type="text" size="5" maxlength="5" class="form-control" v-model="user.street_num">
-          <span>{{ errors[0] }}</span>
-        </ValidationProvider>
-      </div>
-      <div class="form-group">
-        <label>Direction:</label>
-        <select name="direction" id="direction" v-model="user.street_direction">
-          <option value="N">N</option>
-          <option value="S">S</option>
-          <option value="E">E</option>
-          <option value="W">W</option>
-        </select>
-       </div>
-      <div class="form-group">
-        <label>Street:</label>
-        <input type="text" maxlength="45" class="form-control" v-model="user.street">
-      </div>
-      <div class="form-group">
-        <label>ZIP code:</label>
-        <ValidationProvider name="ZIP code" rules="numeric" v-slot="{ errors }">
-          <input type="text" size="5" maxlength="5" class="form-control" v-model="user.zip_code">
-          <span>{{ errors[0] }}</span>
-        </ValidationProvider>
       </div>
       <div class="form-group">
         <label>Image URL:</label>

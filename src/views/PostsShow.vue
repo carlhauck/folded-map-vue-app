@@ -1,13 +1,13 @@
 <template>
   <div class="posts-show">
-      <router-link class="nav-link" :to="`/users/${post.user_id}`"><img class="convo-prof" :src="post.user_image" :alt="post.user"></router-link>
+      <router-link class="nav-link" :to="`/users/${post.user_id}`"><img class="convo-prof" v-if="post.user_image" :src="post.user_image" :alt="post.user"><img class="convo-prof" v-if="!post.user_image" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar"></router-link>
       <h2><router-link class="nav-link" :to="`/users/${post.user_id}`">{{ post.user }}</router-link></h2>
       <small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.created_at != post.updated_at"> | Edited {{ postedRelativeTime(post.updated_at) }}</span><span v-if="post.user_id == $parent.getUserId()"> | <router-link class="nav-link" :to="`/posts/${post.id}/edit`">Edit post</router-link> | <span v-on:click="destroyPost(post)">Delete post</span></span></small>
       <h3>{{ post.text }}</h3>
       <p v-if="post.image_url"><img class="post-pic" :src="post.image_url"></p>
       <p><small>{{ comments.length }} <span v-if="comments.length == 1">comment</span><span v-if="comments.length != 1">comments</span></small></p>
       <div v-for="comment in comments">
-        <p><router-link class="nav-link" :to="`/users/${comment.user_id}`"><img class="comment-prof" :src="comment.user_image" :alt="post.user"></router-link></p>
+        <p><router-link class="nav-link" :to="`/users/${comment.user_id}`"><img class="comment-prof" v-if="comment.user_image" :src="comment.user_image" :alt="post.user"><img class="comment-prof" v-if="!comment.user_image" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar"></router-link></p>
         <h4><router-link class="nav-link" :to="`/users/${comment.user_id}`">{{ comment.user }}</router-link></h4>
         <h5 v-if="!(comment.id == commentBeingUpdated)">{{ comment.text }}</h5>
         <p v-if="!(comment.id == commentBeingUpdated)"><small>{{ postedRelativeTime(comment.created_at) }}<span v-if="comment.created_at != comment.updated_at"> | Edited {{ postedRelativeTime(comment.updated_at) }}</span><span v-if="comment.user_id == $parent.getUserId()"> | <span v-on:click="showCommentUpdate(comment)">Edit comment</span> | <span v-on:click="destroyComment(comment)">Delete comment</span></span></small></p>

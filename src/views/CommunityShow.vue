@@ -12,7 +12,7 @@
 
     <h1>Posts</h1>
     <div v-for="post in posts">
-      <router-link class="nav-link" :to="`/users/${post.user_id}`"><img class="convo-prof" :src="post.user_image" :alt="post.user"></router-link>
+      <router-link class="nav-link" :to="`/users/${post.user_id}`"><img class="convo-prof" v-if="post.user_image" :src="post.user_image" :alt="post.user"><img class="convo-prof" v-if="!post.user_image" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar"></router-link>
       <h2><router-link class="nav-link" :to="`/users/${post.user_id}`">{{ post.user }}</router-link></h2>
       <small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.created_at != post.updated_at"> | Edited {{ postedRelativeTime(post.updated_at) }}</span><span v-if="post.user_id == $parent.getUserId()"> | <router-link class="nav-link" :to="`/posts/${post.id}/edit`">Edit post</router-link> | <span v-on:click="destroyPost(post)">Delete post</span></span></small>
       <h3>{{ post.text }}</h3>
@@ -22,7 +22,7 @@
     <h1>Members</h1>
     <!-- Add computed/method to show only OTHER users in block pair? -->
     <div v-for="user in users">
-      <router-link class="nav-link" :to="`/users/${user.id}`"><img class="convo-prof" :src="user.image_url" :alt="user.display_name"></router-link>
+      <router-link class="nav-link" :to="`/users/${user.id}`"><img class="convo-prof" v-if="user.image_url" :src="user.image_url" :alt="user.display_name"><img class="convo-prof" v-if="!user.image_url" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar"></router-link>
       <h3><router-link class="nav-link" :to="`/users/${user.id}`">{{ user.display_name }}</router-link></h3>
     </div>
   </div>
