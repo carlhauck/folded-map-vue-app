@@ -27,6 +27,7 @@
         <h3><router-link class="nav-link" :to="`/users/${user.id}`">{{ user.display_name }}</router-link></h3>
       </div>
     </div>
+    <div style="width: 600px; height: 700px" id="mapContainer"></div>
   </div>
 </template>
 
@@ -61,6 +62,105 @@ export default {
           this.users = response.data.users;
         });
     });
+  },
+  mounted: function () {
+    // Initialize the platform object:
+    var platform = new H.service.Platform({
+      apikey: `${process.env.VUE_APP_HERE_API_KEY}`,
+    });
+
+    // Obtain the default map types from the platform object
+    var defaultLayers = platform.createDefaultLayers();
+
+    // Instantiate (and display) a map object:
+    var map = new H.Map(
+      document.getElementById("mapContainer"),
+      defaultLayers.vector.normal.map,
+      {
+        zoom: 12.2,
+        center: { lng: -87.6598, lat: 41.8781 },
+      }
+    );
+
+    // add a resize listener to make sure that the map occupies the whole container
+    window.addEventListener("resize", () => map.getViewPort().resize());
+
+    // MapEvents enables the event system
+    // Behavior implements default interactions for pan/zoom (also on mobile touch environments)
+    var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+
+    // Create the default UI:
+    var ui = H.ui.UI.createDefault(map, defaultLayers, "en-US");
+    var mapSettings = ui.getControl("mapsettings");
+    var zoom = ui.getControl("zoom");
+    var scalebar = ui.getControl("scalebar");
+    zoom.setZoomSpeed("2");
+
+    // add a resize listener to make sure that the map occupies the whole container
+    window.addEventListener("resize", () => map.getViewPort().resize());
+
+    // Create a style object:
+    var blockStyle = {
+      strokeColor: "#435d6c",
+      fillColor: "#aea8d3",
+      lineWidth: 2,
+      lineCap: "square",
+      lineJoin: "miter",
+    };
+
+    // Create a rectangle and pass the custom style as an options parameter:
+    var blockNorth = new H.map.Rect(
+      new H.geo.Rect(41.92462, -87.71694, 41.93203, -87.7074),
+      { style: blockStyle }
+    );
+    var blockSouth = new H.map.Rect(
+      new H.geo.Rect(41.83017, -87.714365, 41.83723, -87.70482),
+      { style: blockStyle }
+    );
+
+    // Add the rectangle to the map:
+    map.addObject(blockNorth);
+    map.addObject(blockSouth);
+
+    var style = `
+    sources:
+        omv:
+            type: OMV
+            max_zoom: 17
+            min_display_zoom: 1
+    # global description of the map, in this example
+    # the map background color is white
+    scene:
+        background:
+            color: [1.000, 1.000, 1.000, 1.00]
+
+    # section contains the style information for the layers
+    # that are present on the map
+    layers:
+        # user defined name of the rendering layer
+        water_areas:
+            # the section defines where the rendering layer takes
+            # its data from source: omv is mandatory for the Vector Tile API
+            # layer: water specifies what vector layer is taken
+            # for the rendering see REST API documentation for the
+            # list of available layers.
+            data: {source: omv, layer: water}
+            # section defines how to render the layer
+            draw:
+                polygons:
+                    order: 1 # z-order of the layer
+                    color: "#435d6c"
+        road:
+            data: {source: omv, layer: roads}
+            draw:
+                lines:
+                    order: 2
+                    color: [0.561, 0.561, 0.561, 1.00]
+                    width: 15
+    `;
+
+    var baseLayer = map.getBaseLayer();
+    baseLayer.getProvider().setStyle(new H.map.Style(style));
   },
   methods: {
     postedRelativeTime: function (date) {
