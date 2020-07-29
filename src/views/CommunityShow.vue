@@ -29,7 +29,6 @@
     </div>
     <div id="map">
     </div>
-    <!-- <div v-if="block_pair.north_ne_coord[0]" style="width: 600px; height: 700px" id="mapContainer"></div> -->
   </div>
 </template>
 
