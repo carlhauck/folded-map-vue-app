@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-    
-    <nav class="navbar navbar-expand-lg bg-primary">
+    <nav v-bind:class = "(!['home'].includes($route.name))?'navbar navbar-expand-lg bg-primary':'navbar navbar-expand-lg fixed-top nav-down navbar-transparent'">
       <div class="container">
-        <a class="navbar-brand" href="javascript:;">Folded Map</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+        <div class="navbar-translate">
+          <a class="navbar-brand" href="javascript:;">Folded Map</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
@@ -39,9 +40,12 @@
         </div>
       </div>
     </nav>
-        <div class="container">
-          <router-view/>
-        </div>
+    <div v-if="['home'].includes($route.name)">
+      <router-view/>
+    </div>
+    <div v-if="!['home'].includes($route.name)" class="container">
+      <router-view/>
+    </div>
   </div>
 </template>
 
@@ -93,9 +97,12 @@ export default {
     };
   },
   created: function () {
-    axios.get(`/api/users/${this.getUserId()}`).then((response) => {
-      this.current_user = response.data;
-    });
+    if (this.isLoggedIn()) {
+      axios.get(`/api/users/${this.getUserId()}`).then((response) => {
+        console.log(response.data);
+        this.current_user = response.data;
+      });
+    }
   },
   methods: {
     isLoggedIn: function () {

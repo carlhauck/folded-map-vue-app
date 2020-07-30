@@ -11,7 +11,31 @@
         <input type="submit" value="Publish">
       </form>
 
+      <div class="row">
+        <div class="col-md-8 ml-auto mr-auto">
+          <div class="media-area">
+            <div v-for="post in posts">
+              <div class="media">
+                <a class="pull-left" :href="`/users/${post.user_id}`">
+                  <div class="avatar">
+                    <img class="media-object" src
+                    <img class="media-object" v-if="post.user_image" :src="post.user_image" :alt="post.user"><img class="media-object" v-if="!post.user_image" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
+                  </div>
+                </a>
+                <div class="media-body">
+                  <h5 class="media-heading">{{ post.user }}</a></h5>
+                  <p>{{ post.text }}</p>
+                  <div class="media-footer">
+                    <router-link class="btn btn-primary btn-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <h1>Posts</h1>
+
       <div v-for="post in posts">
         <router-link class="nav-link" :to="`/users/${post.user_id}`"><img class="convo-prof" v-if="post.user_image" :src="post.user_image" :alt="post.user"><img class="convo-prof" v-if="!post.user_image" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar"></router-link>
         <h2><router-link class="nav-link" :to="`/users/${post.user_id}`">{{ post.user }}</router-link></h2>
