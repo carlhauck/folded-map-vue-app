@@ -8,33 +8,40 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
+          <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <router-link class="nav-link" to="/about">About</router-link>
+              <router-link v-if="isLoggedIn()" class="nav-link" to="/community">Community</router-link>
             </li>
             <li class="nav-item">
               <router-link v-if="isLoggedIn()" class="nav-link" to="/conversations">Conversations</router-link>
             </li>
             <li class="nav-item">
-              <router-link v-if="isLoggedIn()" class="nav-link" to="/community">Community</router-link>
+              <router-link class="nav-link" to="/about">About</router-link>
+            </li>
+            <li class="nav-item dropdown">
+              <router-link v-if="isLoggedIn()" class="nav-link navbar-brand" data-toggle="dropdown" width="30" height="30" aria-expanded="false" to="/profile">
+                <div class="profile-photo-small">
+                  <img :src="current_user.image_url" :alt="current_user.display_name" class="img-circle img-responsive img-no-padding">
+                </div>
+              </router-link>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="/profile">Profile</a>
+                <a class="dropdown-item" href="/logout">Log Out</a>
+              </ul>
             </li>
             <li class="nav-item">
-              <router-link v-if="isLoggedIn()" class="nav-link" to="/profile">Profile</router-link>
+              <router-link v-if="!isLoggedIn()" class="nav-link" to="/signup">Sign Up</router-link>
             </li>
             <li class="nav-item">
-              <router-link v-if="!isLoggedIn()" class="nav-link" to="/signup">Signup</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link v-if="!isLoggedIn()" class="nav-link" to="/login">Login</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link v-if="isLoggedIn()" class="nav-link" to="/logout">Logout</router-link>
+              <router-link v-if="!isLoggedIn()" class="nav-link" to="/login">Log In</router-link>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-    <router-view/>
+        <div class="container">
+          <router-view/>
+        </div>
   </div>
 </template>
 
@@ -78,11 +85,18 @@ img.post-pic {
 </style>
 
 <script>
+import axios from "axios";
 export default {
   data: function () {
-    return {};
+    return {
+      current_user: {},
+    };
   },
-  created: function () {},
+  created: function () {
+    axios.get(`/api/users/${this.getUserId()}`).then((response) => {
+      this.current_user = response.data;
+    });
+  },
   methods: {
     isLoggedIn: function () {
       return localStorage.getItem("jwt");
