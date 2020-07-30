@@ -1,20 +1,45 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/about">About</router-link> |
-      <router-link v-if="isLoggedIn()" to="/conversations">Conversations</router-link> |
-      <router-link v-if="isLoggedIn()" to="/community">Community</router-link> |
-      <router-link v-if="isLoggedIn()" to="/profile">Profile</router-link> |
-      <router-link v-if="!isLoggedIn()" to="/signup">Signup</router-link> |
-      <router-link v-if="!isLoggedIn()" to="/login">Login</router-link> |
-      <router-link v-if="isLoggedIn()" to="/logout">Logout</router-link>
-    </div>
+    
+    <nav class="navbar navbar-expand-lg bg-primary">
+      <div class="container">
+        <a class="navbar-brand" href="javascript:;">Folded Map</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <router-link class="nav-link" to="/about">About</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link v-if="isLoggedIn()" class="nav-link" to="/conversations">Conversations</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link v-if="isLoggedIn()" class="nav-link" to="/community">Community</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link v-if="isLoggedIn()" class="nav-link" to="/profile">Profile</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link v-if="!isLoggedIn()" class="nav-link" to="/signup">Signup</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link v-if="!isLoggedIn()" class="nav-link" to="/login">Login</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link v-if="isLoggedIn()" class="nav-link" to="/logout">Logout</router-link>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
     <router-view/>
   </div>
 </template>
 
 <style>
-#app {
+/* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -49,7 +74,7 @@ img.comment-prof {
 }
 img.post-pic {
   width: 200px;
-}
+} */
 </style>
 
 <script>
