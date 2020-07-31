@@ -64,7 +64,7 @@
         <div class="col-md-8 ml-auto mr-auto">
           <div class="media-area">
             <div class="title text-center">
-              <button type="button" style="width: 15%" class="btn btn-default btn-round btn-border" data-toggle="modal" data-target="#createPostModal"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><title>d-edit</title><g stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" fill="#66615B" stroke="#66615B"><polyline points="9 5 2 5 2 22 19 22 19 15" fill="none" stroke="#66615B" stroke-miterlimit="10"></polyline> <line x1="16" y1="5" x2="19" y2="8" fill="none" stroke-miterlimit="10" stroke-linecap="butt"></line> <polygon points="11 16 7 17 8 13 19 2 22 5 11 16" fill="none" stroke-miterlimit="10"></polygon></g></svg></button>
+              <button type="button" style="width: 12%" class="btn btn-default btn-round btn-border" data-toggle="modal" data-target="#createPostModal"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"><title>d-edit</title><g stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" fill="#66615B" stroke="#66615B"><polyline points="9 5 2 5 2 22 19 22 19 15" fill="none" stroke="#66615B" stroke-miterlimit="10"></polyline> <line x1="16" y1="5" x2="19" y2="8" fill="none" stroke-miterlimit="10" stroke-linecap="butt"></line> <polygon points="11 16 7 17 8 13 19 2 22 5 11 16" fill="none" stroke-miterlimit="10"></polygon></g></svg></button>
             </div>
             <div v-for="post in posts">
               <div class="media">
