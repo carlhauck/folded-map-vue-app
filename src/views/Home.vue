@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     
-    <!-- <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="false">
-      <div class="modal-dialog modal-lg">
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="false">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header no-border-header text-center">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -13,19 +13,25 @@
           <div class="modal-body">
             <form v-on:submit.prevent="attemptLogin()">
               <div class="form-group">
-                <textarea class="form-control" v-model="newPost" placeholder="Type post here..." rows="12"></textarea>
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" v-model="email">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" v-model="newPostImageUrl" placeholder="Paste image URL (optional)...">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" v-model="password">
               </div>
               <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary btn-round">Publish</button>
+                <button type="submit" class="btn btn-primary btn-round" data-target="#loginModal" data-toggle="modal">Log In</button>
               </div>
+              <div class="modal-footer no-border-footer">
+                <p><span class="text-muted text-center"><a href="javascript:;">Forgot your password?</a></span></p>
+                <p><span class="text-muted text-center">Don't have an account? <a href="javascript:;">Sign up</a>.</span></p>
+            </div>
             </form>
           </div>  
         </div>
       </div>
-    </div> -->
+    </div>
 
     <div class="page-header" style="background-image: url('https://images.unsplash.com/photo-1534299062258-32b234270bab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2602&q=80')">
       <div class="filter"></div>
@@ -46,13 +52,36 @@
 </style>
 
 <script>
+import axios from "axios";
 export default {
   data: function () {
     return {
-      message: "Welcome to Vue.js!",
+      email: "",
+      password: "",
     };
   },
   created: function () {},
-  methods: {},
+  methods: {
+    attemptLogin: function () {
+      var params = {
+        email: this.email,
+        password: this.password,
+      };
+      axios
+        .post("/api/sessions", params)
+        .then((response) => {
+          axios.defaults.headers.common["Authorization"] =
+            "Bearer " + response.data.jwt;
+          localStorage.setItem("jwt", response.data.jwt);
+          localStorage.setItem("user_id", response.data.user_id);
+          this.$router.push("/community");
+        })
+        .catch((error) => {
+          this.errors = ["Invalid email or password."];
+          this.email = "";
+          this.password = "";
+        });
+    },
+  },
 };
 </script>

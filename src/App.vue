@@ -33,7 +33,7 @@
               </ul>
             </li>
             <li class="nav-item">
-              <router-link v-if="!isLoggedIn()" class="nav-link" to="/login">Log In</router-link>
+              <a v-if="!isLoggedIn()" class="nav-link" data-toggle="modal" data-target="#loginModal" href="#">Log In</a>
             </li>
             <li class="nav-item">
               <router-link v-if="!isLoggedIn()" class="nav-link" to="/signup">Sign Up</router-link>
