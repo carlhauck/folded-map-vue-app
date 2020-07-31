@@ -20,9 +20,10 @@
               <router-link class="nav-link" to="/about">About</router-link>
             </li>
             <li class="nav-item dropdown">
-              <router-link v-if="isLoggedIn()" class="nav-link navbar-brand" data-toggle="dropdown" width="30" height="30" aria-expanded="false" to="/profile">
+              <router-link v-show="isLoggedIn()" class="nav-link navbar-brand" data-toggle="dropdown" width="30" height="30" aria-expanded="false" to="/profile">
                 <div class="profile-photo-small">
-                  <img :src="current_user.image_url" :alt="current_user.display_name" class="img-circle img-responsive img-no-padding">
+                  <img v-show="current_user.image_url" class="img-circle img-responsive img-no-padding" :src="current_user.image_url" :alt="current_user.display_name">
+                  <img v-show="!current_user.image_url" class="img-circle img-responsive img-no-padding" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
                 </div>
               </router-link>
               <ul class="dropdown-menu dropdown-menu-right">
