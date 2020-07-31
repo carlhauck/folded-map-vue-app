@@ -74,7 +74,7 @@
                   </div>
                 </a>
                 <div class="media-body">
-                  <h5 class="media-heading">{{ post.user }}</h5>
+                  <a href="`/users/${post.user_id}`"><h5 class="media-heading">{{ post.user }}</h5></a>
                   <div class="text-muted"><small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.created_at != post.updated_at"> | Edited {{ postedRelativeTime(post.updated_at) }}</span></small></div>
                   <p>{{ post.text }}</p>
                   <div v-if="post.image_url"><img class="post-pic" :src="post.image_url">

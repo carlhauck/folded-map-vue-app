@@ -1,5 +1,64 @@
 <template>
   <div class="posts-show">
+      
+      <div class="col-md-8 ml-auto mr-auto">
+          <div class="media-area">
+            <div class="media">
+              <a class="pull-left" :href="`/users/${post.user_id}`">
+                <div class="avatar">
+                  <img class="media-object" v-if="post.user_image" :src="post.user_image" :alt="post.user"><img class="media-object" v-if="!post.user_image" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
+                </div>
+              </a>
+              <div class="media-body">
+                <a href="`/users/${post.user_id}`"><h5 class="media-heading">{{ post.user }}</h5></a>
+                <div class="text-muted"><small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.created_at != post.updated_at"> | Edited {{ postedRelativeTime(post.updated_at) }}</span></small></div>
+                <p>{{ post.text }}</p>
+                <div v-if="post.image_url"><img class="post-pic" :src="post.image_url">
+                </div>
+                <div class="media-footer">
+                  <router-link class="btn btn-primary btn-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link><span v-if="post.user_id == $parent.getUserId()"><router-link class="btn btn-default btn-link" :to="`/posts/${post.id}/edit`">Edit post</router-link><span class="btn btn-danger btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
+                </div>
+
+                <div v-for="comment in comments">
+                  <div class="media">
+                    <a class="pull-left" :href="`/users/${comment.user_id}`">
+                      <div class="avatar">
+                        <img class="media-object" v-if="comment.user_image" :src="comment.user_image" :alt="comment.user"><img class="media-object" v-if="!comment.user_image" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
+                      </div>
+                    </a>
+                    <div class="media-body">
+                      <a href="`/users/${post.user_id}`"><h5 class="media-heading">{{ comment.user }}</h5></a>
+                      <div class="text-muted"><small>{{ postedRelativeTime(comment.created_at) }}<span v-if="comment.created_at != comment.updated_at"> | Edited {{ postedRelativeTime(comment.updated_at) }}</span></small></div>
+                      <p>{{ comment.text }}</p>
+                      <div v-if="comment.image_url"><img class="post-pic" :src="comment.image_url">
+                      </div>
+                      <div class="media-footer">
+                        <span v-if="comment.user_id == $parent.getUserId()"><router-link class="btn btn-default btn-link" :to="`/comments/${comment.id}/edit`">Edit comment</router-link><span class="btn btn-danger btn-link" v-on:click="destroyComment(comment)">Delete comment</span></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="media media-post">
+                  <a class="pull-left author" href="/profile">
+                    <div class="avatar">
+                      <img class="media-object" :src="current_user.image_url">
+                    </div>
+                  </a>
+                  <div class="media-body">
+                    <form v-on:submit.prevent="createComment(post)">
+                      <textarea class="form-control" v-model="newComment" :placeholder="`Comment on ${post.user_first_name}'s post...`" rows="4"></textarea>
+                      <div class="media-footer">
+                        <input class="btn btn-round pull-right" type="submit" value="Leave comment">
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+      
       <router-link class="nav-link" :to="`/users/${post.user_id}`"><img class="convo-prof" v-if="post.user_image" :src="post.user_image" :alt="post.user"><img class="convo-prof" v-if="!post.user_image" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar"></router-link>
       <h2><router-link class="nav-link" :to="`/users/${post.user_id}`">{{ post.user }}</router-link></h2>
       <small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.created_at != post.updated_at"> | Edited {{ postedRelativeTime(post.updated_at) }}</span><span v-if="post.user_id == $parent.getUserId()"> | <router-link class="nav-link" :to="`/posts/${post.id}/edit`">Edit post</router-link> | <span v-on:click="destroyPost(post)">Delete post</span></span></small>
