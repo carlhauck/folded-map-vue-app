@@ -129,3 +129,29 @@ body {
   font-weight: 300;
   font-family: 'silkaregular', "Helvetica", Arial, sans-serif;
 }
+
+.landing-text {
+  font-family: 'silka_monobold', 'Muli', sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+  /* font-weight: 800; */
+  font-size: 9em;
+  margin: 0.08em;
+  line-height: 0.75em;
+}
+
+.fliph {
+  display: inline-block;
+  vertical-align: top;
+  transform: scaleX(-1); /* Or also:   rotateY(180deg) */
+  -ms-filter: fliph;
+  filter: fliph;
+}
+
+.jumbotron {
+  text-align: center;
+  max-width: 475px;
+  border: 15px solid rgba(255, 255, 255, 0.75);
+  margin: 0 auto;
+}
