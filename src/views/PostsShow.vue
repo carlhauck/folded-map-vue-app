@@ -9,14 +9,15 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <h3 class="modal-title text-center">Edit post...</h3>
+            <small>Originally posted {{ postedTime(post.created_at) }}</small>
           </div>
           <div class="modal-body">
             <form v-on:submit.prevent="updatePost()">
               <div class="form-group">
-                <textarea class="form-control" v-model="newPost" placeholder="Type post here..." rows="12"></textarea>
+                <textarea class="form-control" v-model="post.text" placeholder="Type post here..." rows="12"></textarea>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" v-model="newPostImageUrl" placeholder="Paste image URL (optional)...">
+                <input type="text" class="form-control" v-model="post.image_url" placeholder="Paste image URL (optional)...">
               </div>
               <div class="form-group text-center">
                 <button type="submit" class="btn btn-primary btn-round">Update</button>
@@ -43,7 +44,8 @@
             <div v-if="post.image_url"><img class="post-pic" :src="post.image_url">
             </div>
             <div class="media-footer">
-              <router-link class="btn btn-primary btn-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link><span v-if="post.user_id == $parent.getUserId()"><router-link class="btn btn-default btn-link" :to="`/posts/${post.id}/edit`">Edit post</router-link><span class="btn btn-danger btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
+              <router-link class="btn btn-primary btn-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link><span v-if="post.user_id == $parent.getUserId()">
+              <a href="javascript:;" class="btn btn-default btn-link" data-toggle="modal" data-target="#updatePostModal">Edit post</a><span class="btn btn-danger btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
             </div>
 
             <div v-for="comment in comments">
@@ -173,6 +175,18 @@ export default {
           this.comments.splice(commentIndex, 1);
         });
       }
+    },
+    postedTime: function (date) {
+      return moment(date).format("LLL");
+    },
+    updatePost: function (post) {
+      var params = {
+        text: post.text,
+        image_url: post.image_url,
+      };
+      axios.patch(`api/posts/${post.id}`, params).then((response) => {
+        this.$router.push(`/posts/${post.id}`);
+      });
     },
   },
 };
