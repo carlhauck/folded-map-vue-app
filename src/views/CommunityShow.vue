@@ -2,6 +2,7 @@
   <div class="community-show">
     <div v-if="block_pair.ns_max">
 
+      <!-- Modal: Create Post -->
       <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
@@ -28,6 +29,35 @@
         </div>
       </div>
 
+      <!-- Modal: Update Post -->
+      <div class="modal fade" id="updatePostModal" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header no-border-header text-center">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h3 class="modal-title text-center">Edit post...</h3>
+              <small>Originally posted {{ postedTime(post.created_at) }}</small>
+            </div>
+            <div class="modal-body">
+              <form v-on:submit.prevent="updatePost()">
+                <div class="form-group">
+                  <textarea class="form-control" v-model="selectedPostText" placeholder="Type post here..." rows="12"></textarea>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" v-model="selectedPostImageUrl" placeholder="Paste image URL (optional)...">
+                </div>
+                <div class="form-group text-center">
+                  <button type="submit" class="btn btn-primary btn-round" data-target="#updatePostModal" data-toggle="modal">Update</button>
+                </div>
+              </form>
+            </div>  
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal: Show Map -->
       <div class="modal fade bd-example-modal-lg" id="showMapModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
@@ -82,7 +112,7 @@
                   <div v-if="post.image_url"><img class="post-pic" :src="post.image_url">
                   </div>
                   <div class="media-footer">
-                    <router-link class="btn btn-primary btn-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link><span v-if="post.user_id == $parent.getUserId()"><router-link class="btn btn-default btn-link" :to="`/posts/${post.id}/edit`">Edit post</router-link><span class="btn btn-danger btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
+                    <router-link class="btn btn-primary btn-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link><span v-if="post.user_id == $parent.getUserId()"><a href="javascript:;" class="btn btn-default btn-link" v-on:click="sendInfo(post.id, post.text, post.image_url)" data-toggle="modal" data-target="#updatePostModal">Edit post</a><span class="btn btn-danger btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
                   </div>
                 </div>
               </div>
@@ -116,12 +146,16 @@ export default {
       current_user: {},
       block_pair: {},
       posts: [],
+      post: {},
       users: [],
       newComment: "",
       newPost: "",
       newPostImageUrl: "",
       updatedComment: "",
       commentBeingUpdated: null,
+      selectedPostId: "",
+      selectedPostText: "",
+      selectedPostImageUrl: "",
     };
   },
   created: function () {
@@ -216,6 +250,29 @@ export default {
           this.posts[postIndex].comments.splice(commentIndex, 1);
         });
       }
+    },
+    sendInfo(selectedPostId, selectedPostText, selectedPostImageUrl) {
+      this.selectedPostId = selectedPostId;
+      this.selectedPostText = selectedPostText;
+      this.selectedPostImageUrl = selectedPostImageUrl;
+    },
+    postedTime: function (date) {
+      return moment(date).format("LLL");
+    },
+    updatePost: function () {
+      var postIndex = this.posts.findIndex(
+        (obj) => obj.id === this.selectedPostId
+      );
+      var params = {
+        text: this.selectedPostText,
+        image_url: this.selectedPostImageUrl,
+      };
+      axios
+        .patch(`api/posts/${this.selectedPostId}`, params)
+        .then((response) => {
+          this.posts[postIndex].text = this.selectedPostText;
+          this.posts[postIndex].image_url = this.selectedPostImageUrl;
+        });
     },
     renderMap: function () {
       mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_ACCESS_TOKEN;

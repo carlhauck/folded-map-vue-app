@@ -12,7 +12,7 @@
             <small>Originally posted {{ postedTime(post.created_at) }}</small>
           </div>
           <div class="modal-body">
-            <form v-on:submit.prevent="updatePost()">
+            <form v-on:submit.prevent="updatePost(post)">
               <div class="form-group">
                 <textarea class="form-control" v-model="post.text" placeholder="Type post here..." rows="12"></textarea>
               </div>
@@ -20,7 +20,7 @@
                 <input type="text" class="form-control" v-model="post.image_url" placeholder="Paste image URL (optional)...">
               </div>
               <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary btn-round">Update</button>
+                <button type="submit" class="btn btn-primary btn-round" data-target="#updatePostModal" data-toggle="modal">Update</button>
               </div>
             </form>
           </div>  
