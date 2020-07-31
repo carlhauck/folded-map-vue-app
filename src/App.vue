@@ -33,10 +33,10 @@
               </ul>
             </li>
             <li class="nav-item">
-              <router-link v-if="!isLoggedIn()" class="nav-link" to="/signup">Sign Up</router-link>
+              <router-link v-if="!isLoggedIn()" class="nav-link" to="/login">Log In</router-link>
             </li>
             <li class="nav-item">
-              <router-link v-if="!isLoggedIn()" class="nav-link" to="/login">Log In</router-link>
+              <router-link v-if="!isLoggedIn()" class="nav-link" to="/signup">Sign Up</router-link>
             </li>
           </ul>
         </div>
