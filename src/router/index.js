@@ -3,7 +3,6 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import About from '../views/About.vue';
 import Signup from '../views/Signup.vue';
-import Login from '../views/Login.vue';
 import Logout from '../views/Logout.vue';
 import UsersShow from '../views/UsersShow.vue';
 import UsersEdit from '../views/UsersEdit.vue';
@@ -12,7 +11,6 @@ import ConversationsShow from '../views/ConversationsShow.vue';
 import ProfileShow from '../views/ProfileShow.vue';
 import CommunityShow from '../views/CommunityShow.vue';
 import PostsShow from '../views/PostsShow.vue';
-import PostsEdit from '../views/PostsEdit.vue';
 
 Vue.use(VueRouter);
 
@@ -31,11 +29,6 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: Signup
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: Login
   },
   {
     path: '/logout',
@@ -76,11 +69,6 @@ const routes = [
     path: '/posts/:id',
     name: 'posts-show',
     component: PostsShow
-  },
-  {
-    path: '/posts/:id/edit',
-    name: 'posts-edit',
-    component: PostsEdit
   },
 ];
 

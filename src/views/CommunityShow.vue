@@ -69,8 +69,8 @@
         </div>
       </div>
 
-      <!-- Left column -->
       <div class="row">
+        <!-- Left column -->
         <div class="col-md-4 ml-auto mr-auto text-center">
           <div class="container">
             <div class="card-title text-center">
