@@ -1,11 +1,12 @@
 <template>
   <div class="home">
     
+    <!-- Login modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="false">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header no-border-header text-center">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" v-on:click="emptyErrors()">
               <span aria-hidden="true">&times;</span>
             </button>
             <h3 class="modal-title text-center">Log In</h3>
@@ -19,9 +20,11 @@
               <div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" class="form-control" v-model="password">
+                <small class="form-text text-muted">{{ errors[0] }}</small>
               </div>
               <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary btn-round" data-target="#loginModal" data-toggle="modal">Log In</button>
+                <!-- <button type="submit" class="btn btn-primary btn-round" data-target="#loginModal" data-toggle="modal">Log In</button> -->
+                <button type="submit" class="btn btn-primary btn-round">Log In</button>
               </div>
               <div class="modal-footer no-border-footer">
                 <p><span class="text-muted text-center"><a href="javascript:;">Forgot your password?</a></span></p>
@@ -33,6 +36,7 @@
       </div>
     </div>
 
+    <!-- Landing page center text -->
     <div class="page-header" style="background-image: url('https://images.unsplash.com/photo-1534299062258-32b234270bab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2602&q=80')">
       <div class="filter"></div>
       <div class="content-center">
@@ -58,6 +62,7 @@ export default {
     return {
       email: "",
       password: "",
+      errors: [],
     };
   },
   created: function () {},
@@ -74,6 +79,7 @@ export default {
             "Bearer " + response.data.jwt;
           localStorage.setItem("jwt", response.data.jwt);
           localStorage.setItem("user_id", response.data.user_id);
+          $("#loginModal").modal("toggle");
           this.$router.push("/community");
         })
         .catch((error) => {
@@ -81,6 +87,9 @@ export default {
           this.email = "";
           this.password = "";
         });
+    },
+    emptyErrors: function () {
+      this.errors = [];
     },
   },
 };

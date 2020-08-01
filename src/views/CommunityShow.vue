@@ -114,7 +114,7 @@
                   <div v-if="post.image_url"><img class="post-pic" :src="post.image_url">
                   </div>
                   <div class="media-footer">
-                    <router-link class="btn btn-primary btn-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link><span v-if="post.user_id == $parent.getUserId()"><a href="javascript:;" class="btn btn-danger btn-link" v-on:click="sendInfo(post.id, post.text, post.image_url)" data-toggle="modal" data-target="#updatePostModal">Edit post</a><span class="btn btn-warning btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
+                    <router-link class="btn btn-info btn-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link><span v-if="post.user_id == $parent.getUserId()"><a href="javascript:;" class="btn btn-warning btn-link" v-on:click="sendInfo(post.id, post.text, post.image_url)" data-toggle="modal" data-target="#updatePostModal">Edit post</a><span class="btn btn-primary btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
                   </div>
                 </div>
               </div>

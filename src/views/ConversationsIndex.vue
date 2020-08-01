@@ -161,7 +161,7 @@ textarea {
   border-left: 1px solid #ffeee0;
 }
 .color-column-2 {
-  background-color: #f3f2f8;
+  background-color: #fcfbfa;
   /* border-right: 1px solid #ffeee0;
   border-left: 1px solid #ffeee0; */
 }
