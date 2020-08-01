@@ -75,16 +75,16 @@
           <div class="container">
             <div class="card-title text-center">
               <a href="javascript:;" v-on:click="renderMap()" data-toggle="modal" data-target="#showMapModal">
-                <h3>{{ block_pair.ns_max }}<svg style="margin: 0 0 3 1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16"><title>increase</title><g stroke-width="1.5" fill="#111111" stroke="#333333"><polygon fill="#dddddd" stroke="#333333" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,5.5 8,0.5 12.5,5.5 "></polygon> <polygon fill="#dddddd" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,10.5 8,15.5 12.5,10.5 "></polygon></g></svg> &nbsp;{{ block_pair.ew_max }}<svg style="margin: 0 0 3 -3" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 16 16"><title>small-triangle-left</title><g stroke-width="1.3" fill="##dddddd" stroke="#333333"><polygon fill="#dddddd" stroke="#333333" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="10.5,3.5 5.5,8 10.5,12.5 "></polygon></g></svg></h3>
+                <h3>{{ block_pair.ns_max }}<svg style="margin: 0 0 3 2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16"><title>increase</title><g stroke-width="1.4" fill="#111111" stroke="#333333"><polygon fill="#eeeeee" stroke="#333333" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,5.5 8,0.5 12.5,5.5 "></polygon> <polygon fill="#eeeeee" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,10.5 8,15.5 12.5,10.5 "></polygon></g></svg> &nbsp;{{ block_pair.ew_max }}<svg style="margin: 0 0 3 -2" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 16 16"><title>small-triangle-left</title><g stroke-width="1.2" fill="##eeeeee" stroke="#333333"><polygon fill="#eeeeee" stroke="#333333" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="10.5,3.5 5.5,8 10.5,12.5 "></polygon></g></svg></h3>
               </a>
             </div>
             <div class="row">
-              <div v-for="user in users">
-                <div class="col">
+              <div v-for="user in users" style="overflow: hidden">
+                <div class="col-md-auto">
                   <a :href="`/users/${user.id}`">
-                    <img v-if="user.image_url" class="img-fluid rounded" :src="user.image_url" :alt="user.display_name" width="85" height="85"><img v-if="!user.image_url" class="img-fluid" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar" width="85" height="85">
+                    <img v-if="user.image_url" class="img-fluid rounded cover" :src="user.image_url" :alt="user.display_name"><img v-if="!user.image_url" class="img-fluid rounded cover" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
                   </a>
-                  <p class="text-center text-muted"><router-link :to="`/users/${user.id}`">{{ user.display_name }}</router-link></p>
+                  <p class="text-center"><router-link :to="`/users/${user.id}`">{{ user.display_name }}</router-link></p>
                 </div>
               </div>
             </div>
@@ -114,7 +114,7 @@
                   <div v-if="post.image_url"><img class="post-pic" :src="post.image_url">
                   </div>
                   <div class="media-footer">
-                    <router-link class="btn btn-primary btn-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link><span v-if="post.user_id == $parent.getUserId()"><a href="javascript:;" class="btn btn-default btn-link" v-on:click="sendInfo(post.id, post.text, post.image_url)" data-toggle="modal" data-target="#updatePostModal">Edit post</a><span class="btn btn-danger btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
+                    <router-link class="btn btn-primary btn-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link><span v-if="post.user_id == $parent.getUserId()"><a href="javascript:;" class="btn btn-danger btn-link" v-on:click="sendInfo(post.id, post.text, post.image_url)" data-toggle="modal" data-target="#updatePostModal">Edit post</a><span class="btn btn-warning btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
                   </div>
                 </div>
               </div>
@@ -135,7 +135,15 @@
   top: 0;
   bottom: 0;
   width: 100%;
-  height: 600px;
+  height: 650px;
+}
+.cover {
+  object-fit: cover;
+  width: 85px;
+  height: 85px;
+}
+.media {
+  padding-bottom: 10px;
 }
 </style>
 

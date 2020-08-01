@@ -95,6 +95,15 @@
 </template>
 
 <style>
+.media .media-heading {
+  margin-bottom: -4px;
+}
+.text-muted {
+  margin-bottom: 8px;
+}
+.media .media-footer {
+  margin-top: 12px;
+}
 </style>
 
 <script>
