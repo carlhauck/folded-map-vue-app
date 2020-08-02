@@ -1,5 +1,43 @@
 <template>
   <div class="signup">
+    
+    <!-- Login modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header no-border-header text-center">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" v-on:click="emptyErrors()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h3 class="modal-title text-center">Log In</h3>
+          </div>
+          <div class="modal-body">
+            <form v-on:submit.prevent="attemptLogin()">
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" v-model="loginEmail">
+              </div>
+              <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" v-model="loginPassword">
+                <small class="form-text text-muted">{{ errors[0] }}</small>
+              </div>
+              <div v-if="!loginEmail || !loginPassword" class="form-group text-center">
+                <button type="submit" class="btn btn-primary btn-round disabled" disabled>Log In</button>
+              </div>
+              <div v-else class="form-group text-center">
+                <button type="submit" class="btn btn-primary btn-round">Log In</button>
+              </div>
+            </form>
+            <div class="modal-footer no-border-footer">
+              <p><span class="text-muted text-center"><a href="javascript:;">Forgot your password?</a></span></p>
+              <p><span class="text-muted text-center">Don't have an account? <span v-on:click="closeModal()"><router-link to="/signup">Sign up</router-link></span>.</span></p>
+            </div>
+          </div>  
+        </div>
+      </div>
+    </div>
+    
     <div class="section section-gray">
       <div class="container container-tim">
         <div class="row">
@@ -113,6 +151,9 @@
 .disabled {
   z-index: -1;
 }
+.modal-footer {
+  justify-content: center;
+}
 </style>
 
 <script>
@@ -151,6 +192,9 @@ export default {
       passwordConfirmation: "",
       checkbox: "",
       errors: [],
+      loginEmail: "",
+      loginPassword: "",
+      loginErrors: "",
     };
   },
   methods: {
@@ -174,6 +218,33 @@ export default {
         .catch((error) => {
           this.errors = error.response.data.errors;
         });
+    },
+    attemptLogin: function () {
+      var params = {
+        email: this.loginEmail,
+        password: this.loginPassword,
+      };
+      axios
+        .post("/api/sessions", params)
+        .then((response) => {
+          axios.defaults.headers.common["Authorization"] =
+            "Bearer " + response.data.jwt;
+          this.closeModal();
+          localStorage.setItem("jwt", response.data.jwt);
+          localStorage.setItem("user_id", response.data.user_id);
+          this.$router.push("/community");
+        })
+        .catch((error) => {
+          this.loginErrors = ["Invalid email or password."];
+          this.loginEmail = "";
+          this.loginPassword = "";
+        });
+    },
+    emptyErrors: function () {
+      this.loginErrors = [];
+    },
+    closeModal: function () {
+      $("#loginModal").modal("toggle");
     },
   },
 };

@@ -58,6 +58,9 @@
 .modal-footer {
   justify-content: center;
 }
+.disabled {
+  z-index: -1;
+}
 </style>
 
 <script>
