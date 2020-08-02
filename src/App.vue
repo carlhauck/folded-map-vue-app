@@ -42,10 +42,10 @@
         </div>
       </div>
     </nav>
-    <div v-if="['home'].includes($route.name)">
+    <div v-if="['home', 'about'].includes($route.name)">
       <router-view/>
     </div>
-    <div v-if="!['home'].includes($route.name)" class="main">
+    <div v-if="!['home', 'about'].includes($route.name)" class="main">
       <div class="container">
         <router-view/>
       </div>
