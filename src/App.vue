@@ -19,11 +19,11 @@
             <li class="nav-item">
               <router-link class="nav-link" to="/about">About</router-link>
             </li>
-            <li v-show="isLoggedIn()" class="nav-item dropdown">
+            <li v-if="isLoggedIn()" class="nav-item dropdown">
               <a href="#" class="nav-link" data-toggle="dropdown" width="30" height="30" aria-expanded="false">
                 <div class="profile-photo-small">
-                  <img v-show="current_user.image_url" class="img-circle img-responsive img-no-padding" :src="current_user.image_url" :alt="current_user.display_name">
-                  <img v-show="!current_user.image_url" class="img-circle img-responsive img-no-padding" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
+                  <img v-if="current_user.image_url" class="img-circle img-responsive img-no-padding" :src="current_user.image_url" :alt="current_user.display_name">
+                  <img v-if="!current_user.image_url" class="img-circle img-responsive img-no-padding" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
                 </div>
               </a>
               </router-link>

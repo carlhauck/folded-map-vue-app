@@ -22,14 +22,16 @@
                 <input type="password" class="form-control" v-model="password">
                 <small class="form-text text-muted">{{ errors[0] }}</small>
               </div>
-              <div class="form-group text-center">
-                <!-- <button type="submit" class="btn btn-primary btn-round" data-target="#loginModal" data-toggle="modal">Log In</button> -->
+              <div v-if="!email || !password" class="form-group text-center">
+                <button type="submit" class="btn btn-primary btn-round disabled" disabled>Log In</button>
+              </div>
+              <div v-else class="form-group text-center">
                 <button type="submit" class="btn btn-primary btn-round">Log In</button>
               </div>
             </form>
             <div class="modal-footer no-border-footer">
               <p><span class="text-muted text-center"><a href="javascript:;">Forgot your password?</a></span></p>
-              <p><span class="text-muted text-center">Don't have an account? <a href="javascript:;">Sign up</a>.</span></p>
+              <p><span class="text-muted text-center">Don't have an account? <span v-on:click="closeModal()"><router-link to="/signup">Sign up</router-link></span>.</span></p>
             </div>
           </div>  
         </div>
@@ -80,9 +82,9 @@ export default {
         .then((response) => {
           axios.defaults.headers.common["Authorization"] =
             "Bearer " + response.data.jwt;
+          this.closeModal();
           localStorage.setItem("jwt", response.data.jwt);
           localStorage.setItem("user_id", response.data.user_id);
-          $("#loginModal").modal("toggle");
           this.$router.push("/community");
         })
         .catch((error) => {
@@ -93,6 +95,9 @@ export default {
     },
     emptyErrors: function () {
       this.errors = [];
+    },
+    closeModal: function () {
+      $("#loginModal").modal("toggle");
     },
   },
 };

@@ -87,13 +87,16 @@
               </ValidationObserver>
               <div class="form-check">
                 <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="">
+                  <input class="form-check-input" type="checkbox" v-model="checkbox" value="checked">
                   <span class="form-check-sign"></span>
                   I have read and agree to the <a href="javascript:;">Terms of Service</a>.
                 </label>
               </div>
-              <div class="form-group text-center">
-                <input type="submit" class="btn btn-primary btn-round" value="Sign up">
+              <div v-if="!firstName || !lastName || !streetNum || !streetDirection || !street || !zipCode || !email || !password || !passwordConfirmation || !checkbox" class="form-group text-center">
+                <button type="submit" class="btn btn-primary btn-round disabled" disabled>Sign up</button>
+              </div>
+              <div v-else class="form-group text-center">
+                <button type="submit" class="btn btn-primary btn-round">Sign up</button>
               </div>
             </form>
           </div>
@@ -106,6 +109,9 @@
 <style scoped>
 .section {
   padding-top: 0;
+}
+.disabled {
+  z-index: -1;
 }
 </style>
 
@@ -143,6 +149,7 @@ export default {
       email: "",
       password: "",
       passwordConfirmation: "",
+      checkbox: "",
       errors: [],
     };
   },
