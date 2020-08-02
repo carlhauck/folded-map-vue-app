@@ -105,9 +105,9 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 h2 {
-  margin-bottom: 0.3em;
+  margin-bottom: 0.4em;
 }
 h3 {
   margin-bottom: 0.6em;

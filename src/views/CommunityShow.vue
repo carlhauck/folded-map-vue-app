@@ -130,7 +130,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 #map {
   top: 0;
   bottom: 0;

@@ -95,7 +95,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .media-heading {
   display: block;
   white-space: nowrap;

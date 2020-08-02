@@ -26,18 +26,18 @@
                 <!-- <button type="submit" class="btn btn-primary btn-round" data-target="#loginModal" data-toggle="modal">Log In</button> -->
                 <button type="submit" class="btn btn-primary btn-round">Log In</button>
               </div>
-              <div class="modal-footer no-border-footer">
-                <p><span class="text-muted text-center"><a href="javascript:;">Forgot your password?</a></span></p>
-                <p><span class="text-muted text-center">Don't have an account? <a href="javascript:;">Sign up</a>.</span></p>
-            </div>
             </form>
+            <div class="modal-footer no-border-footer">
+              <p><span class="text-muted text-center"><a href="javascript:;">Forgot your password?</a></span></p>
+              <p><span class="text-muted text-center">Don't have an account? <a href="javascript:;">Sign up</a>.</span></p>
+            </div>
           </div>  
         </div>
       </div>
     </div>
 
     <!-- Landing page center text -->
-    <div class="page-header" style="background-image: url('https://images.unsplash.com/photo-1534299062258-32b234270bab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2602&q=80')">
+    <div class="page-header" style="background-image: url('.././assets/img/bradknight-chicago.jpg')">
       <div class="filter"></div>
       <div class="content-center">
         <div class="jumbotron jumbotron-fluid bg-transparent">
@@ -52,7 +52,10 @@
   </div>
 </template>
 
-<style>
+<style scoped>
+.modal-footer {
+  justify-content: center;
+}
 </style>
 
 <script>
