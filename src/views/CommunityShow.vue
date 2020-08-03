@@ -111,13 +111,13 @@
             <div class="media-area">
               <div v-for="post in posts">
                 <div class="media">
-                  <a class="pull-left" :href="`/users/${post.user_id}`">
+                  <router-link class="pull-left" :to="`/users/${post.user_id}`">
                     <div class="avatar">
                       <img class="media-object" v-if="post.user_image" :src="post.user_image" :alt="post.user"><img class="media-object" v-if="!post.user_image" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
                     </div>
-                  </a>
+                  </router-link>
                   <div class="media-body">
-                    <a href="`/users/${post.user_id}`"><h5 class="media-heading">{{ post.user }}</h5></a>
+                    <router-link :to="`/users/${post.user_id}`"><h5 class="media-heading">{{ post.user }}</h5></router-link>
                     <div class="text-muted"><small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.created_at != post.updated_at"> | Edited {{ postedRelativeTime(post.updated_at) }}</span></small></div>
                     <p>{{ post.text }}</p>
                     <div v-if="post.image_url"><img class="post-pic" :src="post.image_url">
