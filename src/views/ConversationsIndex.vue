@@ -1,7 +1,7 @@
 <template>
   <div class="conversations-index">
     
-    <div class="row">
+    <div class="row" v-if="conversations.length > 0">
       <!-- Left column (conversations index) -->
       <div class="col-md-4 ml-auto mr-auto color-column">
         <div id="convos-container">
@@ -102,6 +102,18 @@
         </div>
       </div>
     </div>
+
+    <div v-else class="row justify-content-center">
+      <div class="card card-profile card-plain">
+        <div class="card-body">
+          <div class="card-title">
+            <h5 class="card-title text-muted no-convos">You haven't started any conversations yet.</h5>
+            <router-link to="/community"><h5 class="card-title text-muted no-convos">Go be social.</h5></router-link>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 

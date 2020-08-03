@@ -75,7 +75,7 @@
           <div id="block-container">
             <div class="container">
               <div class="card-title text-center">
-                <a href="javascript:;" v-on:click="renderMap()" data-toggle="modal" data-target="#showMapModal">
+                <a href="#" v-on:click="renderMap()" data-toggle="modal" data-target="#showMapModal">
                   <h3>{{ block_pair.ns_max }}<svg style="margin: 0 0 3 2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16"><title>increase</title><g stroke-width="1.4" fill="#111111" stroke="#66615b"><polygon fill="#eeeeee" stroke="#66615b" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,5.5 8,0.5 12.5,5.5 "></polygon> <polygon fill="#eeeeee" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,10.5 8,15.5 12.5,10.5 "></polygon></g></svg> &nbsp;{{ block_pair.ew_max }}<svg style="margin: 0 0 3 -2" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 16 16"><title>small-triangle-left</title><g stroke-width="1.2" fill="##eeeeee" stroke="#66615b"><polygon fill="#eeeeee" stroke="#66615b" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="10.5,3.5 5.5,8 10.5,12.5 "></polygon></g></svg></h3>
                 </a>
               </div>
@@ -121,7 +121,7 @@
                     </div>
                     <!-- Comments / Edit / Delete -->
                     <div class="media-footer">
-                      <router-link class="btn btn-info btn-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link><span v-if="post.user_id == $parent.getUserId()"><a href="javascript:;" class="btn btn-warning btn-link" v-on:click="sendInfo(post.id, post.text, post.image_url)" data-toggle="modal" data-target="#updatePostModal">Edit post</a><span class="btn btn-primary btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
+                      <router-link class="btn btn-info btn-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link><span v-if="post.user_id == $parent.getUserId()"><a href="#" class="btn btn-warning btn-link" v-on:click="sendInfo(post.id, post.text, post.image_url)" data-toggle="modal" data-target="#updatePostModal">Edit post</a><span class="btn btn-primary btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
                     </div>
                   </div>
                 </div>
@@ -216,6 +216,7 @@ p {
 }
 img.post-pic {
   margin-top: 8px;
+  max-width: 300px;
 }
 </style>
 

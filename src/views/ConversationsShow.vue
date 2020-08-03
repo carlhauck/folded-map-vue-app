@@ -1,6 +1,9 @@
 <template>
   <div class="conversations-show">
-    <div v-if="partner.display_name">
+    <div v-if="!partner">
+      <h2>No conversations</h2>
+    </div>
+    <div v-if="partner">
       <img class="convo-prof" v-if="partner.image_url" :src="partner.image_url" :alt="partner.display_name"><img class="convo-prof" v-if="!partner.image_url" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
       <h3>Conversation w/ {{ partner.display_name }}</h3>
       <p><router-link class="nav-link" :to="`/users/${partner.id}`">See Profile</router-link></p>

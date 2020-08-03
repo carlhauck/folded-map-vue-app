@@ -30,7 +30,7 @@
               </div>
             </form>
             <div class="modal-footer no-border-footer">
-              <p><span class="text-muted text-center"><a href="javascript:;">Forgot your password?</a></span></p>
+              <p><span class="text-muted text-center"><a href="#">Forgot your password?</a></span></p>
               <p><span class="text-muted text-center">Don't have an account? <span v-on:click="closeModalSignup()"><a href="#">Sign up</a></span>.</span></p>
             </div>
           </div>  

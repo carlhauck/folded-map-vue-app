@@ -26,7 +26,6 @@
                   <img v-if="!current_user.image_url" class="img-circle img-responsive img-no-padding" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
                 </div>
               </a>
-              </router-link>
               <ul class="dropdown-menu dropdown-menu-right">
                 <router-link class="dropdown-item" to="/profile">Profile</router-link>
                 <router-link class="dropdown-item" to="/logout">Log Out</router-link>
