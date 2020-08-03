@@ -100,7 +100,7 @@ export default {
       this.errors = [];
     },
     closeModal: function () {
-      $("#loginModal").modal("toggle");
+      $("#loginModal").modal("hide");
     },
   },
 };
