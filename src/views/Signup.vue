@@ -20,7 +20,7 @@
               <div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" class="form-control" v-model="loginPassword">
-                <small class="form-text text-muted">{{ errors[0] }}</small>
+                <small class="form-text text-muted">{{ loginErrors[0] }}</small>
               </div>
               <div v-if="!loginEmail || !loginPassword" class="form-group text-center">
                 <button type="submit" class="btn btn-primary btn-round disabled" disabled>Log In</button>

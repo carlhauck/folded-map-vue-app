@@ -1,14 +1,62 @@
 <template>
   <div class="users-edit">
+
+    <!-- Password modal -->
+    <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-hidden="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header no-border-header text-center">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h3 class="modal-title text-center">Change Password</h3>
+          </div>
+          <div class="modal-body">
+            <form v-on:submit.prevent="updateUser()">
+              <div class="form-group">
+                <ValidationProvider rules="required" v-slot="{ errors }">
+                  <label>Old password:</label>
+                  <input type="password" class="form-control"  id="oldPassword" v-model="oldPassword">
+                  <small class="form-text text-muted">{{ errors[0] }}</small>
+                </ValidationProvider>
+              </div>
+              <ValidationObserver>
+                <div class="form-group">
+                  <label>New password:</label>
+                  <ValidationProvider v-slot="{ errors }" id="confirmation">
+                    <input type="password" class="form-control" v-model="password">
+                    <small class="form-text text-muted">{{ errors[0] }}</small>
+                  </ValidationProvider>
+                </div>
+                <div class="form-group">
+                  <label>Password confirmation:</label>
+                  <ValidationProvider rules="confirmed:confirmation" v-slot="{ errors }">
+                    <input type="password" class="form-control" v-model="passwordConfirmation">
+                    <small class="form-text text-muted">{{ errors[0] }}</small>
+                  </ValidationProvider>
+                </div>
+              </ValidationObserver>
+              <div v-if="!oldPassword || !password || !passwordConfirmation" class="form-group text-center">
+                <button class="btn btn-primary btn-round disabled" disabled>Update</button>
+              </div>
+              <div v-else class="form-group text-center">
+                <button type="submit" class="btn btn-primary btn-round">Update</button>
+              </div>
+            </form>
+          </div>  
+        </div>
+      </div>
+    </div>
+
     <div class="section section-gray">
       <div class="container container-tim">
         <div class="row">
           <div class="col-md-8 ml-auto mr-auto">
             <form v-on:submit.prevent="updateUser()">
               <h2>Edit Profile</h2>
-              <ul>
-                <li class="text-danger" v-for="error in errors">{{ error }}</li>
-              </ul>
+              <div class="form-group">
+                <button class="btn btn-warning btn-round btn-sm" type="button" data-toggle="modal" data-target="#passwordModal">Update password</button>
+              </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col">
@@ -69,26 +117,6 @@
                 </ValidationProvider>
               </div>
               <div class="form-group">
-                <label>Old password:</label>
-                <input type="password" class="form-control" v-model="oldPassword">
-              </div>
-              <ValidationObserver>
-                <div class="form-group">
-                  <label>New password:</label>
-                  <ValidationProvider v-slot="{ errors }" vid="confirmation">
-                    <input type="password" class="form-control" v-model="password">
-                    <span>{{ errors[0] }}</span>
-                  </ValidationProvider>
-                </div>
-                <div class="form-group">
-                  <label>Password confirmation:</label>
-                  <ValidationProvider rules="confirmed:confirmation" v-slot="{ errors }">
-                    <input type="password" class="form-control" v-model="passwordConfirmation">
-                    <span>{{ errors[0] }}</span>
-                  </ValidationProvider>
-                </div>
-              </ValidationObserver>
-              <div class="form-group">
                 <div class="row">
                   <div class="col-md-3">
                     <label>Birthday:</label>
@@ -106,22 +134,20 @@
               </div>
               <div class="form-group">
                 <label>What you like about where you live:</label>
-                <textarea class="form-control" id="howIGotHere" rows="3" v-model="user.what_i_like"></textarea>
+                <textarea class="form-control" id="whatILike" rows="3" v-model="user.what_i_like"></textarea>
               </div>
               <div class="form-group">
                 <label>What you'd change about where you live:</label>
-                <textarea class="form-control" id="howIGotHere" rows="3" v-model="user.what_i_would_change"></textarea>
+                <textarea class="form-control" id="WhatIWouldChange" rows="3" v-model="user.what_i_would_change"></textarea>
               </div>
               <div class="form-group">
-                <div class="row">
-                  <div class="col"></div>
-                  <div class="col text-center">
+                <div class="row justify-content-center">
+                  <div class="col-4 text-center">
                     <input type="submit" class="btn btn-info btn-round" value="Update Profile">
                   </div>
-                  <div class="col text-center">
-                    <button class="btn btn-warning btn-round" v-on:click="destroyUser()">Delete Account</button>
+                  <div class="col-4 text-center">
+                    <button class="btn btn-primary btn-round" v-on:click="destroyUser()">Delete Account</button>
                   </div>
-                  <div class="col"></div>
                 </div>
               </div>
             </form>
@@ -131,6 +157,18 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+h2 {
+  margin-bottom: 8px;
+}
+.section {
+  padding-top: 0;
+}
+.disabled {
+  z-index: -1;
+}
+</style>
 
 <script>
 import Vue from "vue";
@@ -207,6 +245,31 @@ export default {
         .then((response) => {
           this.$router.push("/profile");
         })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+        });
+    },
+    updateUserNoRedirect: function () {
+      var params = {
+        first_name: this.user.first_name,
+        last_name: this.user.last_name,
+        email: this.user.email,
+        old_password: this.oldPassword,
+        password: this.password,
+        password_confirmation: this.passwordConfirmation,
+        birthday: this.user.birthday,
+        street_num: this.user.street_num,
+        street_direction: this.user.street_direction,
+        street: this.user.street,
+        zip_code: this.user.zip_code,
+        image_url: this.user.image_url,
+        how_i_got_here: this.user.how_i_got_here,
+        what_i_like: this.user.what_i_like,
+        what_i_would_change: this.user.what_i_would_change,
+      };
+      axios
+        .patch(`/api/users/${this.user.id}`, params)
+        .then((response) => {})
         .catch((error) => {
           this.errors = error.response.data.errors;
         });
