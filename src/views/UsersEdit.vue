@@ -146,7 +146,7 @@
                     <input type="submit" class="btn btn-info btn-round" value="Update Profile">
                   </div>
                   <div class="col-4 text-center">
-                    <button class="btn btn-primary btn-round" v-on:click="destroyUser()">Delete Account</button>
+                    <button class="btn btn-primary btn-round" type="button" v-on:click="destroyUser()">Delete Account</button>
                   </div>
                 </div>
               </div>

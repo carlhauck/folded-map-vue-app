@@ -83,15 +83,11 @@
                       <option value="W">W</option>
                     </select>
                   </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col">
+                  <div class="col-md-4">
                     <label>Street:</label>
                     <input type="text" maxlength="45" class="form-control" v-model="street">
                   </div>
-                  <div class="col">
+                  <div class="col-md-2">
                     <label>ZIP code:</label>
                     <ValidationProvider name="ZIP code" rules="numeric" v-slot="{ errors }">
                       <input type="text" size="5" maxlength="5" class="form-control" v-model="zipCode">
@@ -213,7 +209,9 @@ export default {
       axios
         .post("/api/users", params)
         .then((response) => {
-          this.$router.push("/login");
+          this.$router.push("/").then((response) => {
+            $("#loginModal").modal("toggle");
+          });
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
