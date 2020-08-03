@@ -12,7 +12,7 @@
             <h3 class="modal-title text-center">Change Password</h3>
           </div>
           <div class="modal-body">
-            <form v-on:submit.prevent="updateUser()">
+            <form v-on:submit.prevent="updateUserNoRedirect()">
               <div class="form-group">
                 <ValidationProvider rules="required" v-slot="{ errors }">
                   <label>Old password:</label>
@@ -23,7 +23,7 @@
               <ValidationObserver>
                 <div class="form-group">
                   <label>New password:</label>
-                  <ValidationProvider v-slot="{ errors }" id="confirmation">
+                  <ValidationProvider v-slot="{ errors }" vid="confirmation">
                     <input type="password" class="form-control" v-model="password">
                     <small class="form-text text-muted">{{ errors[0] }}</small>
                   </ValidationProvider>
@@ -251,25 +251,19 @@ export default {
     },
     updateUserNoRedirect: function () {
       var params = {
-        first_name: this.user.first_name,
-        last_name: this.user.last_name,
-        email: this.user.email,
         old_password: this.oldPassword,
         password: this.password,
         password_confirmation: this.passwordConfirmation,
-        birthday: this.user.birthday,
-        street_num: this.user.street_num,
-        street_direction: this.user.street_direction,
-        street: this.user.street,
-        zip_code: this.user.zip_code,
-        image_url: this.user.image_url,
-        how_i_got_here: this.user.how_i_got_here,
-        what_i_like: this.user.what_i_like,
-        what_i_would_change: this.user.what_i_would_change,
       };
       axios
         .patch(`/api/users/${this.user.id}`, params)
-        .then((response) => {})
+        .then((response) => {
+          $("#passwordModal").modal("toggle");
+          this.oldPassword = "";
+          this.password = "";
+          this.passwordConfirmation = "";
+          this.errors = [];
+        })
         .catch((error) => {
           this.errors = error.response.data.errors;
         });
