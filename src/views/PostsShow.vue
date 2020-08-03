@@ -31,32 +31,32 @@
     <div class="col-md-8 ml-auto mr-auto">
       <div class="media-area">
         <div class="media">
-          <a class="pull-left" :href="`/users/${post.user_id}`">
+          <router-link class="pull-left" :to="`/users/${post.user_id}`">
             <div class="avatar">
               <img class="media-object" v-if="post.user_image" :src="post.user_image" :alt="post.user"><img class="media-object" v-if="!post.user_image" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
             </div>
-          </a>
+          </router-link>
           <div class="media-body">
-            <a href="`/users/${post.user_id}`"><h5 class="media-heading">{{ post.user }}</h5></a>
+            <router-link :to="`/users/${post.user_id}`"><h5 class="media-heading">{{ post.user }}</h5></router-link>
             <div class="text-muted"><small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.created_at != post.updated_at"> | Edited {{ postedRelativeTime(post.updated_at) }}</span></small>
             </div>
             <p>{{ post.text }}</p>
             <div v-if="post.image_url"><img class="post-pic" :src="post.image_url">
             </div>
             <div class="media-footer">
-              <p class="btn btn-info btn-link">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></p><span v-if="post.user_id == $parent.getUserId()">
+              <span class="btn btn-info btn-link">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></span><span v-if="post.user_id == $parent.getUserId()">
               <a href="javascript:;" class="btn btn-warning btn-link" data-toggle="modal" data-target="#updatePostModal">Edit post</a><span class="btn btn-primary btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
             </div>
 
             <div v-for="comment in comments">
               <div class="media">
-                <a class="pull-left" :href="`/users/${comment.user_id}`">
+                <router-link class="pull-left" :to="`/users/${comment.user_id}`">
                   <div class="avatar">
                     <img class="media-object" v-if="comment.user_image" :src="comment.user_image" :alt="comment.user"><img class="media-object" v-if="!comment.user_image" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
                   </div>
-                </a>
+                </router-link>
                 <div class="media-body">
-                  <a href="`/users/${post.user_id}`"><h5 class="media-heading">{{ comment.user }}</h5></a>
+                  <router-link :to="`/users/${post.user_id}`"><h5 class="media-heading">{{ comment.user }}</h5></router-link>
                   <div v-if="!(comment.id == commentBeingUpdated)" class="text-muted"><small>{{ postedRelativeTime(comment.created_at) }}<span v-if="comment.created_at != comment.updated_at"> | Edited {{ postedRelativeTime(comment.updated_at) }}</span></small></div>
                   <p v-if="!(comment.id == commentBeingUpdated)">{{ comment.text }}</p>
                   <form v-if="comment.id == commentBeingUpdated && updatedComment" v-on:submit.prevent="updateComment(comment)">
@@ -72,11 +72,11 @@
               </div>
             </div>
             <div class="media media-post">
-              <a class="pull-left author" href="/profile">
+              <router-link class="pull-left author" to="/profile">
                 <div class="avatar">
                   <img class="media-object" :src="current_user.image_url">
                 </div>
-              </a>
+              </router-link>
               <div class="media-body">
                 <form v-on:submit.prevent="createComment(post)">
                   <textarea class="form-control" v-model="newComment" :placeholder="`Comment on ${post.user_first_name}'s post...`" rows="4"></textarea>
@@ -94,7 +94,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .media .media-heading {
   margin-bottom: -4px;
 }
@@ -110,6 +110,10 @@
 }
 .media .media {
   margin-top: 20px;
+}
+p {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 </style>
 

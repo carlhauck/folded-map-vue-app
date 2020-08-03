@@ -76,7 +76,7 @@
             <div class="container">
               <div class="card-title text-center">
                 <a href="javascript:;" v-on:click="renderMap()" data-toggle="modal" data-target="#showMapModal">
-                  <h3>{{ block_pair.ns_max }}<svg style="margin: 0 0 3 2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16"><title>increase</title><g stroke-width="1.4" fill="#111111" stroke="#333333"><polygon fill="#eeeeee" stroke="#333333" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,5.5 8,0.5 12.5,5.5 "></polygon> <polygon fill="#eeeeee" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,10.5 8,15.5 12.5,10.5 "></polygon></g></svg> &nbsp;{{ block_pair.ew_max }}<svg style="margin: 0 0 3 -2" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 16 16"><title>small-triangle-left</title><g stroke-width="1.2" fill="##eeeeee" stroke="#333333"><polygon fill="#eeeeee" stroke="#333333" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="10.5,3.5 5.5,8 10.5,12.5 "></polygon></g></svg></h3>
+                  <h3>{{ block_pair.ns_max }}<svg style="margin: 0 0 3 2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16"><title>increase</title><g stroke-width="1.4" fill="#111111" stroke="#66615b"><polygon fill="#eeeeee" stroke="#66615b" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,5.5 8,0.5 12.5,5.5 "></polygon> <polygon fill="#eeeeee" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,10.5 8,15.5 12.5,10.5 "></polygon></g></svg> &nbsp;{{ block_pair.ew_max }}<svg style="margin: 0 0 3 -2" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 16 16"><title>small-triangle-left</title><g stroke-width="1.2" fill="##eeeeee" stroke="#66615b"><polygon fill="#eeeeee" stroke="#66615b" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="10.5,3.5 5.5,8 10.5,12.5 "></polygon></g></svg></h3>
                 </a>
               </div>
             </div>
@@ -84,17 +84,14 @@
           <div id="users-container">
             <div class="container">
               <div class="row">
-                <div v-for="user in users" style="overflow: hidden">
+                <div v-for="user in users">
                   <div class="col-md-auto">
-                    <a :href="`/users/${user.id}`">
+                    <router-link :to="`/users/${user.id}`">
                       <img v-if="user.image_url" class="img-fluid rounded cover" :src="user.image_url" :alt="user.display_name"><img v-if="!user.image_url" class="img-fluid rounded cover" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
-                    </a>
+                    </router-link>
                     <p class="text-center"><router-link :to="`/users/${user.id}`">{{ user.display_name }}</router-link></p>
                   </div>
                 </div>
-              </div>
-              <div class="text-center">
-                <h6 class="author">{{ block_pair.users.length }} members</h6>
               </div>
             </div>
           </div>
@@ -153,13 +150,27 @@
   width: 85px;
   height: 85px;
 }
+.media-area {
+  margin-bottom: 4em;
+}
+
+.media .media-heading {
+  margin-bottom: -4px;
+}
+.text-muted {
+  margin-bottom: 8px;
+}
+.media .media-footer {
+  margin-top: 12px;
+}
 .media {
   padding-bottom: 10px;
   margin-top: 20px;
 }
-.media-area {
-  margin-bottom: 4em;
+.media .media {
+  margin-top: 20px;
 }
+
 #block-container::-webkit-scrollbar {
   display: none;
 }
@@ -195,6 +206,16 @@
 #new-post-button {
   margin-top: 22px;
   margin-bottom: 10px;
+}
+h3 {
+  color: #66615b;
+}
+p {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+img.post-pic {
+  margin-top: 8px;
 }
 </style>
 

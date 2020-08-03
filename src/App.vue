@@ -28,8 +28,8 @@
               </a>
               </router-link>
               <ul class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="/profile">Profile</a>
-                <a class="dropdown-item" href="/logout">Log Out</a>
+                <router-link class="dropdown-item" to="/profile">Profile</router-link>
+                <router-link class="dropdown-item" to="/logout">Log Out</router-link>
               </ul>
             </li>
             <li class="nav-item">

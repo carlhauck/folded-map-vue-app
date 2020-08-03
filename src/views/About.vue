@@ -31,7 +31,7 @@
             </form>
             <div class="modal-footer no-border-footer">
               <p><span class="text-muted text-center"><a href="javascript:;">Forgot your password?</a></span></p>
-              <p><span class="text-muted text-center">Don't have an account? <span v-on:click="closeModal()"><router-link to="/signup">Sign up</router-link></span>.</span></p>
+              <p><span class="text-muted text-center">Don't have an account? <span v-on:click="closeModalSignup()"><a href="#">Sign up</a></span>.</span></p>
             </div>
           </div>  
         </div>
@@ -193,7 +193,7 @@ export default {
         .then((response) => {
           axios.defaults.headers.common["Authorization"] =
             "Bearer " + response.data.jwt;
-          this.closeModal();
+          $("#loginModal").modal("toggle");
           localStorage.setItem("jwt", response.data.jwt);
           localStorage.setItem("user_id", response.data.user_id);
           this.$router.push("/community");
@@ -207,8 +207,9 @@ export default {
     emptyErrors: function () {
       this.errors = [];
     },
-    closeModal: function () {
+    closeModalSignup: function () {
       $("#loginModal").modal("toggle");
+      this.$router.push("/signup");
     },
   },
 };
