@@ -72,49 +72,60 @@
       <div class="row">
         <!-- Left column -->
         <div class="col-md-4 ml-auto mr-auto text-center">
-          <div class="container">
-            <div class="card-title text-center">
-              <a href="javascript:;" v-on:click="renderMap()" data-toggle="modal" data-target="#showMapModal">
-                <h3>{{ block_pair.ns_max }}<svg style="margin: 0 0 3 2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16"><title>increase</title><g stroke-width="1.4" fill="#111111" stroke="#333333"><polygon fill="#eeeeee" stroke="#333333" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,5.5 8,0.5 12.5,5.5 "></polygon> <polygon fill="#eeeeee" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,10.5 8,15.5 12.5,10.5 "></polygon></g></svg> &nbsp;{{ block_pair.ew_max }}<svg style="margin: 0 0 3 -2" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 16 16"><title>small-triangle-left</title><g stroke-width="1.2" fill="##eeeeee" stroke="#333333"><polygon fill="#eeeeee" stroke="#333333" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="10.5,3.5 5.5,8 10.5,12.5 "></polygon></g></svg></h3>
-              </a>
-            </div>
-            <div class="row">
-              <div v-for="user in users" style="overflow: hidden">
-                <div class="col-md-auto">
-                  <a :href="`/users/${user.id}`">
-                    <img v-if="user.image_url" class="img-fluid rounded cover" :src="user.image_url" :alt="user.display_name"><img v-if="!user.image_url" class="img-fluid rounded cover" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
-                  </a>
-                  <p class="text-center"><router-link :to="`/users/${user.id}`">{{ user.display_name }}</router-link></p>
-                </div>
+          <div id="block-container">
+            <div class="container">
+              <div class="card-title text-center">
+                <a href="javascript:;" v-on:click="renderMap()" data-toggle="modal" data-target="#showMapModal">
+                  <h3>{{ block_pair.ns_max }}<svg style="margin: 0 0 3 2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16"><title>increase</title><g stroke-width="1.4" fill="#111111" stroke="#333333"><polygon fill="#eeeeee" stroke="#333333" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,5.5 8,0.5 12.5,5.5 "></polygon> <polygon fill="#eeeeee" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,10.5 8,15.5 12.5,10.5 "></polygon></g></svg> &nbsp;{{ block_pair.ew_max }}<svg style="margin: 0 0 3 -2" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 16 16"><title>small-triangle-left</title><g stroke-width="1.2" fill="##eeeeee" stroke="#333333"><polygon fill="#eeeeee" stroke="#333333" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="10.5,3.5 5.5,8 10.5,12.5 "></polygon></g></svg></h3>
+                </a>
               </div>
             </div>
-            <div class="text-center">
-              <h6 class="author">{{ block_pair.users.length }} members</h6>
+          </div>
+          <div id="users-container">
+            <div class="container">
+              <div class="row">
+                <div v-for="user in users" style="overflow: hidden">
+                  <div class="col-md-auto">
+                    <a :href="`/users/${user.id}`">
+                      <img v-if="user.image_url" class="img-fluid rounded cover" :src="user.image_url" :alt="user.display_name"><img v-if="!user.image_url" class="img-fluid rounded cover" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
+                    </a>
+                    <p class="text-center"><router-link :to="`/users/${user.id}`">{{ user.display_name }}</router-link></p>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                <h6 class="author">{{ block_pair.users.length }} members</h6>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Right column -->
         <div class="col-md-8 ml-auto mr-auto">
-          <div class="media-area">
-            <div class="title text-center">
-              <button type="button" style="width: 12%" class="btn btn-default btn-round btn-border" data-toggle="modal" data-target="#createPostModal"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"><title>d-edit</title><g stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" fill="#66615B" stroke="#66615B"><polyline points="9 5 2 5 2 22 19 22 19 15" fill="none" stroke="#66615B" stroke-miterlimit="10"></polyline> <line x1="16" y1="5" x2="19" y2="8" fill="none" stroke-miterlimit="10" stroke-linecap="butt"></line> <polygon points="11 16 7 17 8 13 19 2 22 5 11 16" fill="none" stroke-miterlimit="10"></polygon></g></svg></button>
-            </div>
-            <div v-for="post in posts">
-              <div class="media">
-                <a class="pull-left" :href="`/users/${post.user_id}`">
-                  <div class="avatar">
-                    <img class="media-object" v-if="post.user_image" :src="post.user_image" :alt="post.user"><img class="media-object" v-if="!post.user_image" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
-                  </div>
-                </a>
-                <div class="media-body">
-                  <a href="`/users/${post.user_id}`"><h5 class="media-heading">{{ post.user }}</h5></a>
-                  <div class="text-muted"><small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.created_at != post.updated_at"> | Edited {{ postedRelativeTime(post.updated_at) }}</span></small></div>
-                  <p>{{ post.text }}</p>
-                  <div v-if="post.image_url"><img class="post-pic" :src="post.image_url">
-                  </div>
-                  <div class="media-footer">
-                    <router-link class="btn btn-info btn-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link><span v-if="post.user_id == $parent.getUserId()"><a href="javascript:;" class="btn btn-warning btn-link" v-on:click="sendInfo(post.id, post.text, post.image_url)" data-toggle="modal" data-target="#updatePostModal">Edit post</a><span class="btn btn-primary btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
+          <div id="new-post-container">
+              <div id="new-post-button" class="text-center">
+                <button type="button" style="width: 12%" class="btn btn-default btn-round btn-border" data-toggle="modal" data-target="#createPostModal"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"><title>d-edit</title><g stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" fill="#66615B" stroke="#66615B"><polyline points="9 5 2 5 2 22 19 22 19 15" fill="none" stroke="#66615B" stroke-miterlimit="10"></polyline> <line x1="16" y1="5" x2="19" y2="8" fill="none" stroke-miterlimit="10" stroke-linecap="butt"></line> <polygon points="11 16 7 17 8 13 19 2 22 5 11 16" fill="none" stroke-miterlimit="10"></polygon></g></svg></button>
+              </div>
+          </div>
+          <div id="posts-container">
+            <div class="media-area">
+              <div v-for="post in posts">
+                <div class="media">
+                  <a class="pull-left" :href="`/users/${post.user_id}`">
+                    <div class="avatar">
+                      <img class="media-object" v-if="post.user_image" :src="post.user_image" :alt="post.user"><img class="media-object" v-if="!post.user_image" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
+                    </div>
+                  </a>
+                  <div class="media-body">
+                    <a href="`/users/${post.user_id}`"><h5 class="media-heading">{{ post.user }}</h5></a>
+                    <div class="text-muted"><small>{{ postedRelativeTime(post.created_at) }}<span v-if="post.created_at != post.updated_at"> | Edited {{ postedRelativeTime(post.updated_at) }}</span></small></div>
+                    <p>{{ post.text }}</p>
+                    <div v-if="post.image_url"><img class="post-pic" :src="post.image_url">
+                    </div>
+                    <!-- Comments / Edit / Delete -->
+                    <div class="media-footer">
+                      <router-link class="btn btn-info btn-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link><span v-if="post.user_id == $parent.getUserId()"><a href="javascript:;" class="btn btn-warning btn-link" v-on:click="sendInfo(post.id, post.text, post.image_url)" data-toggle="modal" data-target="#updatePostModal">Edit post</a><span class="btn btn-primary btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -144,6 +155,46 @@
 }
 .media {
   padding-bottom: 10px;
+  margin-top: 20px;
+}
+.media-area {
+  margin-bottom: 4em;
+}
+#block-container::-webkit-scrollbar {
+  display: none;
+}
+#block-container {
+  margin: 0;
+  max-height: 18vh;
+  overflow-x: hidden;
+}
+#users-container::-webkit-scrollbar {
+  display: none;
+}
+#users-container {
+  margin: 0;
+  max-height: 82vh;
+  overflow-x: hidden;
+}
+#new-post-container::-webkit-scrollbar {
+  display: none;
+}
+#new-post-container {
+  margin: 0;
+  max-height: 18vh;
+  overflow-x: hidden;
+}
+#posts-container::-webkit-scrollbar {
+  display: none;
+}
+#posts-container {
+  margin: 0;
+  max-height: 82vh;
+  overflow-x: hidden;
+}
+#new-post-button {
+  margin-top: 22px;
+  margin-bottom: 10px;
 }
 </style>
 

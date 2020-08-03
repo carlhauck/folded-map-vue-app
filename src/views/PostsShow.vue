@@ -44,8 +44,8 @@
             <div v-if="post.image_url"><img class="post-pic" :src="post.image_url">
             </div>
             <div class="media-footer">
-              <router-link class="btn btn-primary btn-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link><span v-if="post.user_id == $parent.getUserId()">
-              <a href="javascript:;" class="btn btn-default btn-link" data-toggle="modal" data-target="#updatePostModal">Edit post</a><span class="btn btn-danger btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
+              <p class="btn btn-info btn-link">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></p><span v-if="post.user_id == $parent.getUserId()">
+              <a href="javascript:;" class="btn btn-warning btn-link" data-toggle="modal" data-target="#updatePostModal">Edit post</a><span class="btn btn-primary btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
             </div>
 
             <div v-for="comment in comments">
@@ -66,7 +66,7 @@
                   <div v-if="comment.image_url"><img class="post-pic" :src="comment.image_url">
                   </div>
                   <div class="media-footer">
-                    <span v-if="comment.user_id == $parent.getUserId()"><span class="btn btn-default btn-link" v-on:click="showCommentUpdate(comment)">Edit comment</span></router-link><span class="btn btn-danger btn-link" v-on:click="destroyComment(comment)">Delete comment</span></span>
+                    <span v-if="comment.user_id == $parent.getUserId()"><span class="btn btn-warning btn-link" v-on:click="showCommentUpdate(comment)">Edit comment</span></router-link><span class="btn btn-primary btn-link" v-on:click="destroyComment(comment)">Delete comment</span></span>
                   </div>
                 </div>
               </div>
@@ -103,6 +103,13 @@
 }
 .media .media-footer {
   margin-top: 12px;
+}
+.media {
+  padding-bottom: 10px;
+  margin-top: 30px;
+}
+.media .media {
+  margin-top: 20px;
 }
 </style>
 

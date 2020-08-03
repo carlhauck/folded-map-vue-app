@@ -36,9 +36,13 @@
       </div>
       <!-- Right column (conversation show) -->
       <div class="col-md-8 ml-auto mr-auto">
-        <div id="msgs-container">
+        <div id="#convo-partner-container">
           <div v-if="selectedConversation">
             <h4 class="text-center">Conversation w/ <router-link :to="`/users/${selectedConversation.partner.id}`">{{ selectedConversation.partner.display_name }}</router-link></h4>
+          </div>
+        </div>
+        <div id="msgs-container">
+          <div v-if="selectedConversation">
             <div v-for="message in selectedConversation.messages">
               <!-- Conversation partner messages -->
               <div v-if="message.user_id != $parent.getUserId()" class="row justify-content-start">
@@ -161,7 +165,7 @@ textarea {
 }
 .truncate {
   white-space: nowrap;
-  max-width: 228px;
+  max-width: 226px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -175,7 +179,8 @@ h5 {
   margin-bottom: 0;
 }
 h4 {
-  margin-bottom: 0.75em;
+  margin-top: 0.72em;
+  margin-bottom: 0.55em;
 }
 #msgs-container::-webkit-scrollbar {
   display: none;
@@ -200,16 +205,21 @@ td.final-td {
   max-height: 100vh;
   overflow-x: hidden;
 }
+#convo-partner-container {
+  margin: 0;
+  max-height: 10vh;
+  overflow-x: hidden;
+}
 #msgs-container::-webkit-scrollbar {
   display: none;
 }
 #msgs-container {
   margin: 0;
-  max-height: 75vh;
+  max-height: 68vh;
   overflow-x: hidden;
 }
 #new-msg-container {
-  max-height: 25vh;
+  max-height: 22vh;
   margin-top: 10px;
   margin-bottom: 1em;
 }
