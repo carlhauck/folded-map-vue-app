@@ -91,15 +91,19 @@
         <!-- New message form -->
         <div id="new-msg-container">
           <div class="row justify-content-center">
-              <form class="form-inline" v-on:submit.prevent="createMessage()">
-                <div class="form-group">
-                  <textarea class="form-control" v-model="newMessage" :placeholder="`Message ${selectedConversation.partner.first_name}...`" rows="3" cols="75"></textarea>
+            <form v-on:submit.prevent="createMessage()">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-10 align-self-center">
+                    <textarea class="form-control" v-model="newMessage" :placeholder="`Message ${selectedConversation.partner.first_name}...`" rows="3" cols="100"></textarea>
+                  </div>
+                  <div class="col-2 align-self-center">
+                    <button type="submit" class="btn btn-round btn-neutral btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 48 48"><title>ic_send_48px</title><g fill="#66615B"><path d="M4.02 42L46 24 4.02 6 4 20l30 4-30 4z"></path></g></svg></button>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <button type="submit" class="btn btn-round btn-neutral btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 48 48"><title>ic_send_48px</title><g fill="#66615B"><path d="M4.02 42L46 24 4.02 6 4 20l30 4-30 4z"></path></g></svg></button>
-                </div>
-              </form>
-            </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -189,7 +193,12 @@ td.final-td {
   width: 100%;
 }
 textarea {
+  margin-left: 20px;
   margin-right: 3px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
 }
 .truncate {
   white-space: nowrap;
