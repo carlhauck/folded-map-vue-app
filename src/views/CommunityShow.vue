@@ -76,7 +76,7 @@
             <div class="container">
               <div class="card-title text-center">
                 <a href="#" v-on:click="renderMap()" data-toggle="modal" data-target="#showMapModal">
-                  <h3>{{ block_pair.ns_max }}<svg style="margin: 0 0 3 2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16"><title>increase</title><g stroke-width="1.4" fill="#111111" stroke="#66615b"><polygon fill="#eeeeee" stroke="#66615b" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,5.5 8,0.5 12.5,5.5 "></polygon> <polygon fill="#eeeeee" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,10.5 8,15.5 12.5,10.5 "></polygon></g></svg> &nbsp;{{ block_pair.ew_max }}<svg style="margin: 0 0 3 -2" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 16 16"><title>small-triangle-left</title><g stroke-width="1.2" fill="##eeeeee" stroke="#66615b"><polygon fill="#eeeeee" stroke="#66615b" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="10.5,3.5 5.5,8 10.5,12.5 "></polygon></g></svg></h3>
+                  <h3>{{ block_pair.ns_max }}<svg style="margin: 0 0 3 2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16"><title>increase</title><g stroke-width="1.3" fill="#111111" stroke="#66615b"><polygon fill="#eeeeee" stroke="#66615b" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,5.5 8,0.5 12.5,5.5 "></polygon> <polygon fill="#eeeeee" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,10.5 8,15.5 12.5,10.5 "></polygon></g></svg> &nbsp;{{ block_pair.ew_max }}<svg style="margin: 0 0 3 -2" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 16 16"><title>small-triangle-left</title><g stroke-width="1.1" fill="##eeeeee" stroke="#66615b"><polygon fill="#eeeeee" stroke="#66615b" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="10.5,3.5 5.5,8 10.5,12.5 "></polygon></g></svg></h3>
                 </a>
               </div>
             </div>
@@ -178,6 +178,8 @@
   margin: 0;
   max-height: 18vh;
   overflow-x: hidden;
+  position: sticky;
+  top: 0;
 }
 #users-container::-webkit-scrollbar {
   display: none;
@@ -194,6 +196,8 @@
   margin: 0;
   max-height: 18vh;
   overflow-x: hidden;
+  position: sticky;
+  top: 0;
 }
 #posts-container::-webkit-scrollbar {
   display: none;

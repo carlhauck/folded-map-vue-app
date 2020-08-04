@@ -92,7 +92,7 @@
           <div class="row justify-content-center">
               <form class="form-inline" v-on:submit.prevent="createMessage()">
                 <div class="form-group">
-                  <textarea class="form-control" v-model="newMessage" :placeholder="`Message ${selectedConversation.partner.first_name}...`" rows="3" cols="80"></textarea>
+                  <textarea class="form-control" v-model="newMessage" :placeholder="`Message ${selectedConversation.partner.first_name}...`" rows="3" cols="75"></textarea>
                 </div>
                 <div class="form-group">
                   <button type="submit" class="btn btn-round btn-neutral btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 48 48"><title>ic_send_48px</title><g fill="#66615B"><path d="M4.02 42L46 24 4.02 6 4 20l30 4-30 4z"></path></g></svg></button>
@@ -118,9 +118,15 @@
 </template>
 
 <style scoped>
-.media-heading {
-  display: block;
-  white-space: nowrap;
+.avatar-current-user {
+  margin: 0 auto;
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-left: 15px;
+  margin-right: 0px;
+  border: 3px solid #ffffff;
 }
 .card {
   margin-bottom: 0px;
@@ -135,36 +141,39 @@
   border-radius: 15px;
   color: #ffffff;
 }
-.avatar-current-user {
-  margin: 0 auto;
-  width: 64px;
-  height: 64px;
-  overflow: hidden;
-  border-radius: 50%;
-  margin-left: 15px;
-  margin-right: 0px;
-  border: 3px solid #ffffff;
+.color-column {
+  background-color: #fff8f1;
+  border-right: 1px solid #fff1e6;
+  border-left: 1px solid #fff1e6;
 }
-/* .form-inline {
-  margin-top: 1em;
-  margin-bottom: 1.5em;
-} */
+h4 {
+  margin-top: 0.72em;
+  margin-bottom: 0.55em;
+}
+h5 {
+  line-height: 1.5em;
+  margin-bottom: 0;
+}
 .media {
   margin-top: 15px;
   margin-bottom: 4px;
   padding-bottom: 5px;
   border-bottom: none;
 }
-.media-object {
-  width: 64px;
-  height: 64px;
-  object-fit: cover;
+.media .media-footer {
+  margin-top: 5px;
 }
 .media-footer {
   margin-top: 5px;
 }
-.media .media-footer {
-  margin-top: 5px;
+.media-heading {
+  display: block;
+  white-space: nowrap;
+}
+.media-object {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
 }
 p {
   margin-bottom: 0px;
@@ -172,42 +181,20 @@ p {
 p.text-muted {
   margin-bottom: 0px;
 }
+td {
+  border-bottom: 1px solid lightgray;
+}
+td.final-td {
+  width: 100%;
+}
 textarea {
-  margin-right: 5px;
+  margin-right: 3px;
 }
 .truncate {
   white-space: nowrap;
   max-width: 226px;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-.color-column {
-  background-color: #fff8f1;
-  border-right: 1px solid #fff1e6;
-  border-left: 1px solid #fff1e6;
-}
-h5 {
-  line-height: 1.5em;
-  margin-bottom: 0;
-}
-h4 {
-  margin-top: 0.72em;
-  margin-bottom: 0.55em;
-}
-#msgs-container::-webkit-scrollbar {
-  display: none;
-}
-#msgs-container {
-  margin: 0;
-  padding: 0 10px 10px 0px;
-  max-height: 80vh;
-  overflow-x: hidden;
-}
-td {
-  border-bottom: 1px solid lightgray;
-}
-td.final-td {
-  width: 100%;
 }
 #convos-container::-webkit-scrollbar {
   display: none;
@@ -220,6 +207,14 @@ td.final-td {
 #convo-partner-container {
   margin: 0;
   max-height: 10vh;
+  overflow-x: hidden;
+  position: sticky;
+  top: 0;
+}
+#msgs-container {
+  margin: 0;
+  padding: 0 10px 10px 0px;
+  max-height: 80vh;
   overflow-x: hidden;
 }
 #msgs-container::-webkit-scrollbar {
@@ -234,6 +229,8 @@ td.final-td {
   max-height: 22vh;
   margin-top: 10px;
   margin-bottom: 1em;
+  position: sticky;
+  bottom: 0;
 }
 </style>
 
@@ -255,6 +252,9 @@ export default {
       console.log(response.data[0]);
     });
   },
+  mounted: function () {
+    this.autoScroll();
+  },
   methods: {
     sentRelativeTime: function (date) {
       return moment.utc(date).fromNow();
@@ -264,7 +264,16 @@ export default {
     },
     selectConvo: function (conversation) {
       this.selectedConversation = conversation;
-      console.log(this.selectedConversation);
+      setTimeout(function updateScroll() {
+        var element = document.getElementById("msgs-container");
+        element.scrollTop = element.scrollHeight;
+      }, 0);
+    },
+    autoScroll: function () {
+      setTimeout(function () {
+        var element = document.getElementById("msgs-container");
+        element.scrollTop = element.scrollHeight;
+      }, 1200);
     },
     createMessage: function () {
       var convoIndex = this.conversations.findIndex(
@@ -279,6 +288,10 @@ export default {
         .then((response) => {
           this.conversations[convoIndex].messages.push(response.data);
           this.newMessage = "";
+          setTimeout(function updateScroll() {
+            var element = document.getElementById("msgs-container");
+            element.scrollTop = element.scrollHeight;
+          }, 0);
         })
         .catch((error) => {
           this.errors = error.response.data.errors;

@@ -169,6 +169,9 @@ li {
 .modal-footer p {
   padding-bottom: 0;
 }
+.section {
+  padding: 40px 0;
+}
 </style>
 
 <script>

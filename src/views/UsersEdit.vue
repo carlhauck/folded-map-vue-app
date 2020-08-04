@@ -53,8 +53,8 @@
         <div class="row">
           <div class="col-md-8 ml-auto mr-auto">
             <form v-on:submit.prevent="updateUser()">
-              <h2>Edit Profile</h2>
-              <div class="form-group">
+              <h2 class="text-center">Edit Profile</h2>
+              <div class="form-group text-center">
                 <button class="btn btn-warning btn-round btn-sm" type="button" data-toggle="modal" data-target="#passwordModal">Update password</button>
               </div>
               <div class="form-group">
