@@ -7,7 +7,7 @@
         <div id="convos-container">
           <div class="table-responsive">
             <tbody>
-              <tr v-on:click="selectConvo(conversation)" v-for="conversation in conversations">
+              <tr v-for="conversation in conversations" v-on:click="selectConvo(conversation)">
                 <!-- Profile image -->
                 <td>
                   <div class="media">
@@ -249,6 +249,7 @@ import axios from "axios";
 import moment from "moment";
 import ActionCable from "actioncable";
 export default {
+  // mixins: [Vue2Filters.mixin],
   data: function () {
     return {
       conversations: [],
@@ -281,9 +282,6 @@ export default {
         this.conversations[convoIndex].last_message.text = data.text; // update the last message in real time
       },
     });
-  },
-  mounted: function () {
-    this.autoScroll(1200);
   },
   updated: function () {
     this.autoScroll(100);

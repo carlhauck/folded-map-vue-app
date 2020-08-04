@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav v-bind:class = "(!['home'].includes($route.name))?'navbar navbar-expand-lg bg-primary':'navbar navbar-expand-lg fixed-top nav-down navbar-transparent'">
+    <nav class="navbar navbar-expand-lg" v-bind:class = "(!['home'].includes($route.name))?'bg-primary':'fixed-top nav-down navbar-transparent'">
       <div class="container">
         <div class="navbar-translate">
           <a class="navbar-brand" href="javascript:;">Folded Map <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48"><title>split-vertical</title><g><rect x="6" y="22" fill="#A49E93" width="36" height="4"></rect> <path fill="#51bcda" d="M18,10h4v7c0,0.55228,0.44772,1,1,1h2c0.55228,0,1-0.44772,1-1v-7h4 c0.39062,0,0.74512-0.22754,0.90869-0.58203C30.97021,9.28418,31,9.1416,31,9c0-0.23438-0.08252-0.46582-0.24072-0.65039l-6-7 C24.56934,1.12793,24.29199,1,24,1s-0.56934,0.12793-0.75928,0.34961l-6,7c-0.25342,0.29492-0.31104,0.71289-0.14941,1.06836 C17.25488,9.77246,17.60938,10,18,10z"></path> <path fill="#51bcda" d="M30,38h-4v-7c0-0.55228-0.44772-1-1-1h-2c-0.55228,0-1,0.44772-1,1v7h-4 c-0.39062,0-0.74512,0.22754-0.90869,0.58203c-0.16162,0.35547-0.104,0.77344,0.14941,1.06836l6,7 C23.43066,46.87207,23.70801,47,24,47s0.56934-0.12793,0.75928-0.34961l6-7C30.91748,39.46582,31,39.23438,31,39 c0-0.1416-0.02979-0.28418-0.09131-0.41797C30.74512,38.22754,30.39062,38,30,38z"></path></g></svg></a>
