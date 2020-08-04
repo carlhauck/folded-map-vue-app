@@ -46,7 +46,7 @@
           <div v-if="selectedConversation">
             <div v-for="message in selectedConversation.messages">
               <!-- Conversation partner messages -->
-              <div v-if="message.user_id != $parent.getUserId()" class="row justify-content-start">
+              <div v-if="message.user_id != $parent.getUserInfo().id" class="row justify-content-start">
                 <div class="col-md-8">
                   <div class="media">
                     <div class="avatar">
@@ -66,7 +66,7 @@
                 </div>
               </div>
               <!-- Current user messages -->
-              <div v-if="message.user_id == $parent.getUserId()" class="row justify-content-end">
+              <div v-if="message.user_id == $parent.getUserInfo().id" class="row justify-content-end">
                 <div class="col-md-8">
                   <div class="media">
                     <div class="media-body">
@@ -326,7 +326,6 @@ export default {
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
-          console.log(error);
         });
     },
   },

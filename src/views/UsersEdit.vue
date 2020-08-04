@@ -217,7 +217,7 @@ export default {
     };
   },
   created: function () {
-    axios.get(`/api/users/${this.$parent.getUserId()}`).then((response) => {
+    axios.get(`/api/users/${this.$parent.getUserInfo().id}`).then((response) => {
       this.user = response.data;
     });
   },

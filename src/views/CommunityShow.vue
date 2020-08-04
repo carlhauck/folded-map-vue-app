@@ -121,7 +121,7 @@
                     </div>
                     <!-- Comments / Edit / Delete -->
                     <div class="media-footer">
-                      <router-link class="btn btn-info btn-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link><span v-if="post.user_id == $parent.getUserId()"><a href="#" class="btn btn-warning btn-link" v-on:click="sendInfo(post.id, post.text, post.image_url)" data-toggle="modal" data-target="#updatePostModal">Edit post</a><span class="btn btn-primary btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
+                      <router-link class="btn btn-info btn-link" :to="`/posts/${post.id}`">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></router-link><span v-if="post.user_id == $parent.getUserInfo().id"><a href="#" class="btn btn-warning btn-link" v-on:click="sendInfo(post.id, post.text, post.image_url)" data-toggle="modal" data-target="#updatePostModal">Edit post</a><span class="btn btn-primary btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
                     </div>
                   </div>
                 </div>
@@ -246,17 +246,18 @@ export default {
     };
   },
   created: function () {
-    axios.get(`/api/users/${this.$parent.getUserId()}`).then((response) => {
-      this.current_user = response.data;
-      axios
-        .get(`/api/block_pair/${this.current_user.block_pair_id}`)
-        .then((response) => {
-          console.log(response.data);
-          this.block_pair = response.data;
-          this.posts = response.data.posts;
-          this.users = response.data.users;
-        });
-    });
+    axios
+      .get(`/api/users/${this.$parent.getUserInfo().id}`)
+      .then((response) => {
+        this.current_user = response.data;
+        axios
+          .get(`/api/block_pair/${this.current_user.block_pair_id}`)
+          .then((response) => {
+            this.block_pair = response.data;
+            this.posts = response.data.posts;
+            this.users = response.data.users;
+          });
+      });
   },
   mounted: function () {},
   methods: {
@@ -280,7 +281,6 @@ export default {
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
-          console.log(error);
         });
     },
     destroyPost: function (post) {

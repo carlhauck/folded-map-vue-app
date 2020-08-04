@@ -17,7 +17,7 @@
               <p><strong>Block:</strong> {{ user.block_ns }} {{ user.block_ew }}</p>
             </div>
             <div class="card-footer">
-              <button v-if="user.id != $parent.getUserId()" class="btn btn-primary btn-round" v-on:click="createConversation()">Message {{ user.first_name }}</button>
+              <button v-if="user.id != $parent.getUserInfo().id" class="btn btn-primary btn-round" v-on:click="createConversation()">Message {{ user.first_name }}</button>
             </div>
           </div>
         </div>    
@@ -32,7 +32,7 @@
               <p>{{ user.what_i_like }}</p>
               <h5>What I'd like to change about where I live:</h5>
               <p>{{ user.what_i_would_change }}</p>
-              <router-link v-if="user.id == $parent.getUserId()" class="btn btn-primary btn-round" :to="`/users/${user.id}/edit`">Edit Profile</router-link>
+              <router-link v-if="user.id == $parent.getUserInfo().id" class="btn btn-primary btn-round" :to="`/users/${user.id}/edit`">Edit Profile</router-link>
             </div>            
           </div>
         </div>
@@ -91,7 +91,6 @@ export default {
       axios
         .post("/api/conversations", params)
         .then((response) => {
-          console.log(response.data.id);
           this.$router.push(`/conversations/`);
         })
         .catch((error) => {

@@ -44,7 +44,7 @@
             <div v-if="post.image_url"><img class="post-pic" :src="post.image_url">
             </div>
             <div class="media-footer">
-              <span class="btn btn-info btn-link">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></span><span v-if="post.user_id == $parent.getUserId()">
+              <span class="btn btn-info btn-link">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></span><span v-if="post.user_id == $parent.getUserInfo().id">
               <a href="javascript:;" class="btn btn-warning btn-link" data-toggle="modal" data-target="#updatePostModal">Edit post</a><span class="btn btn-primary btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
             </div>
 
@@ -66,7 +66,7 @@
                   <div v-if="comment.image_url"><img class="post-pic" :src="comment.image_url">
                   </div>
                   <div class="media-footer">
-                    <span v-if="comment.user_id == $parent.getUserId()"><span class="btn btn-warning btn-link" v-on:click="showCommentUpdate(comment)">Edit comment</span></router-link><span class="btn btn-primary btn-link" v-on:click="destroyComment(comment)">Delete comment</span></span>
+                    <span v-if="comment.user_id == $parent.getUserInfo().id"><span class="btn btn-warning btn-link" v-on:click="showCommentUpdate(comment)">Edit comment</span></router-link><span class="btn btn-primary btn-link" v-on:click="destroyComment(comment)">Delete comment</span></span>
                   </div>
                 </div>
               </div>
@@ -133,12 +133,13 @@ export default {
   },
   created: function () {
     axios.get(`/api/posts/${this.$route.params.id}`).then((response) => {
-      console.log(response.data);
       this.post = response.data;
       this.comments = response.data.comments;
-      axios.get(`/api/users/${this.$parent.getUserId()}`).then((response) => {
-        this.current_user = response.data;
-      });
+      axios
+        .get(`/api/users/${this.$parent.getUserInfo().id}`)
+        .then((response) => {
+          this.current_user = response.data;
+        });
     });
   },
   methods: {
@@ -165,7 +166,6 @@ export default {
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
-          console.log(error);
         });
     },
     showCommentUpdate: function (comment) {

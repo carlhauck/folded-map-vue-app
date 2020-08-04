@@ -19,7 +19,7 @@
               <p><strong>Block:</strong> {{ current_user.block_ns }} {{ current_user.block_ew }}</p>
             </div>
             <div class="card-footer">
-              <button v-if="current_user.id != $parent.getUserId()" class="btn btn-primary btn-round" v-on:click="createConversation()">Message {{ current_user.first_name }}</button>
+              <button v-if="current_user.id != $parent.getUserInfo().id" class="btn btn-primary btn-round" v-on:click="createConversation()">Message {{ current_user.first_name }}</button>
             </div>
           </div>
         </div>    
@@ -34,7 +34,7 @@
               <p>{{ current_user.what_i_like }}</p>
               <h5>What I'd like to change about where I live:</h5>
               <p>{{ current_user.what_i_would_change }}</p>
-              <router-link v-if="current_user.id == $parent.getUserId()" class="btn btn-primary btn-round" :to="`/users/${current_user.id}/edit`">Edit Profile</router-link>
+              <router-link v-if="current_user.id == $parent.getUserInfo().id" class="btn btn-primary btn-round" :to="`/users/${current_user.id}/edit`">Edit Profile</router-link>
             </div>            
           </div>
         </div>
@@ -73,9 +73,11 @@ export default {
     };
   },
   created: function () {
-    axios.get(`/api/users/${this.$parent.getUserId()}`).then((response) => {
-      this.current_user = response.data;
-    });
+    axios
+      .get(`/api/users/${this.$parent.getUserInfo().id}`)
+      .then((response) => {
+        this.current_user = response.data;
+      });
   },
   methods: {
     getAge: function (date) {
