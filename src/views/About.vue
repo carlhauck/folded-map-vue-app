@@ -43,8 +43,8 @@
         <div class="row">
           <div class="col-md-9 ml-auto mr-auto">
             <h2>About Folded Map</h2>
-            <p>This web app, built as a capstone for Actualize Coding Bootcamp, was inspired by Englewood photographer/activist Tonika Lewis Johnson's <a href="https://www.foldedmapproject.com/">Folded Map™</a>. Folded Map "visually connects residents who live at corresponding addresses on the North and South Sides of Chicago" in an effort to interrogate the impact of decades of urban segregation and inequitable community investment.</p>
-            <p>Upon starting work on this app, I reached out to Tonika about the idea: to expand upon the scope of her project by allowing Chicago residents to "match" with Map Twins on their own (without requiring her involvement to facilitate that connection). Ideally, it would serve as a democratized supplement to/extension of her artistic vision, something that could help break down interpersonal borders and spark connections that have been foreclosed again and again by segregation. Tonika responded to let me know that she's already been working with an educational game developer on a Folded Map app, but she nonetheless welcomed and encouraged me, graciously, to build my own test/sample app.</p>
+            <p>This web app, built as a capstone project for Actualize Coding Bootcamp, was inspired by Englewood photographer/activist Tonika Lewis Johnson's <a href="https://www.foldedmapproject.com/">Folded Map™</a>, which "visually connects residents who live at corresponding addresses on the North and South Sides of Chicago" in an effort to interrogate the impact of decades of urban segregation (by way of redlining, restrictive covenants, blockbusting, land contracts, etc.) and inequitable community investment.</p>
+            <p>Upon starting work on this app, I reached out to Tonika about the idea: to expand upon the scope of her project by allowing Chicago residents to "match" with Map Twins on their own via an app (without requiring her involvement to facilitate that connection). Ideally, the app would serve as a democratized supplement to/extension of her artistic vision, something that could help break down interpersonal borders and spark connections that have been foreclosed again and again by segregation. Tonika responded to let me know that she's already been working with an educational game developer on a Folded Map app, but she nonetheless welcomed and encouraged me, graciously, to build my own test/sample app.</p>
             <div class="card card-raised page-carousel">
               <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
@@ -106,16 +106,16 @@
             <h3>How This App Works</h3>
             <p>In Tonika Johnson's project, Map Twins are people who share the same street and house number, but live on mirroring N/S sides of the city (e.g., 6900 N Paulina St and 6900 S Paulina St, addresses that are roughly 13.5 miles apart). This app matches Chicagoans based on that definition, but it also attempts to take into account the many Chicagoans who live either on E/W streets or on N/S streets that don't span the entire city.</p>
             <p>When a new user signs up and provides their address, the app sends a GET request containing their input address to a third-party API that returns standardized address info and lat/long coordinates. It then checks for the aforementioned same-street/same-house number condition. If that condition isn't met, it uses the average latitude of Madison Street's N/S dividing line to make another API request (this time using reverse geocoding) to find the nearest address to a coordinate containing the input address' longitude and its mirroring latitude.</p>
-            <p>In addition to matching Map Twins, the app assigns users to a Block Twin Community (which includes members of their own block and members of the block that mirrors their own. These half-mile by half-mile "blocks" are based on Chicago's grid system. (If you're unfamiliar with that grid system, imagine the city of Chicago as a sheet of graph paper with the official city center (the intersection at State and Madison) as the (0,0) x,y axis point. In this app, the block that's eight blocks west and nine blocks <em>south</em> of that point is paired with the block that's eight blocks west and nine blocks <em>north</em> of that point.)</p>
+            <p>In addition to matching Map Twins, the app assigns users to a Block Twin Community (which includes members of their own block and members of the block that mirrors their own. These half-mile by half-mile "blocks" are based on Chicago's grid system. (If you're unfamiliar with that grid system, imagine the city of Chicago as a sheet of graph paper with the official city center (the intersection at State and Madison) as the (0, 0) x/y axis point. For the purposes of this app, the block that's eight blocks west and nine blocks <em>south</em> of that point is paired with the block that's eight blocks west and nine blocks <em>north</em> of that central intersection.)</p>
           </div>
         </div>
       </div>
       <div class="container container-tim">
         <div class="row">
           <div class="col-md-9 ml-auto mr-auto">
-            <h3>Limitations</h3>
-            <p>Because this is a sample app, the number of blocks that have been seeded into the backend database is relatively limited. But the <em>primary</em> limitation of this app, in my mind, is its reliance on the "official" N/S dividing line of Madison Street, an arbitrary division that ignores the real geographic center of Chicago. <a href="https://www.wbez.org/stories/the-heart-of-the-city-finding-chicagos-geographic-center/422a6445-662e-49eb-8064-b1af828085b3">Depending on whom you ask</a> (and which land annexations you take into account), the <em>actual</em> center of the city is located at W 31st and S Western, roughly a half-hour 'L' ride southwest of State and Madison.</p>
-            <p>To be fair, the use of an unofficial (but geographically accurate) city center would detract from the symbolic value of Tonika Johnson's photographed address pairings. But then again, that center would arguably be more representative of the city and its people. Not to mention that the use of an unofficial center might allow residents of Chicago's West Side—another area that has suffered from prolonged civic disinvestment—to be more easily drawn into the fold. (Residents of Austin, for instance, might be paired with residents of Lincoln Park or River North.)</p>
+            <h3>Considerations</h3>
+            <p>One major question I had while developing this app was whether or not it should rely upon Chicago's "official" N/S dividing line of Madison Street—an essentially arbitrary division that ignores the real geographic center of the city. <a href="https://www.wbez.org/stories/the-heart-of-the-city-finding-chicagos-geographic-center/422a6445-662e-49eb-8064-b1af828085b3">Depending on whom you ask</a> (and which land annexations you take into account), the <em>actual</em> center of the city is located at W 31st and S Western, roughly a half-hour 'L' ride southwest of State and Madison.</p>
+            <p>To be fair, the use of an unofficial (but geographically accurate) city center would detract from the symbolic value of Tonika Johnson's photographed address pairings. But then again, an unofficial center would arguably be more representative of the city and its people. Not to mention that it might allow residents of Chicago's West Side—another area that has suffered from prolonged civic disinvestment—to be more easily drawn into the fold. (Residents of Austin, for instance, might be paired with residents of Lincoln Park or River North.)</p>
           </div>
         </div>
       </div>
@@ -171,6 +171,9 @@ li {
 }
 .section {
   padding: 40px 0;
+}
+.card {
+  margin-bottom: 10px;
 }
 </style>
 

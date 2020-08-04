@@ -279,7 +279,11 @@ export default {
           (obj) => obj.id === this.selectedConversation.id
         );
         this.selectedConversation.messages.push(data); // update the messages in real time
-        this.conversations[convoIndex].last_message.text = data.text; // update the last message in real time
+        if (this.conversations[convoIndex].last_message) {
+          this.conversations[convoIndex].last_message.text = data.text;
+        } else {
+          this.conversations[convoIndex].last_message = { text: data.text };
+        } // update the last message in real time
       },
     });
   },
