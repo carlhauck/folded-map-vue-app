@@ -7,7 +7,6 @@ import Logout from '../views/Logout.vue';
 import UsersShow from '../views/UsersShow.vue';
 import UsersEdit from '../views/UsersEdit.vue';
 import ConversationsIndex from '../views/ConversationsIndex.vue';
-import ConversationsShow from '../views/ConversationsShow.vue';
 import ProfileShow from '../views/ProfileShow.vue';
 import CommunityShow from '../views/CommunityShow.vue';
 import PostsShow from '../views/PostsShow.vue';
@@ -49,11 +48,6 @@ const routes = [
     path: '/conversations',
     name: 'conversations-index',
     component: ConversationsIndex
-  },
-  {
-    path: '/conversations/:id',
-    name: 'conversations-show',
-    component: ConversationsShow
   },
   {
     path: '/profile',
