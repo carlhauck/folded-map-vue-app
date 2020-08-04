@@ -238,6 +238,7 @@ textarea {
 <script>
 import axios from "axios";
 import moment from "moment";
+import ActionCable from "actioncable";
 export default {
   data: function () {
     return {
@@ -252,9 +253,31 @@ export default {
       this.selectedConversation = response.data[0];
       console.log(response.data[0]);
     });
+    var cable = ActionCable.createConsumer("ws://localhost:3000/cable");
+    cable.subscriptions.create("MessagesChannel", {
+      connected: () => {
+        // Called when the subscription is ready for use on the server
+        console.log("Connected to MessagesChannel");
+      },
+      disconnected: () => {
+        // Called when the subscription has been terminated by the server
+      },
+      received: (data) => {
+        // Called when there's incoming data on the websocket for this channel
+        console.log("Data from MessagesChannel:", data);
+        var convoIndex = this.conversations.findIndex(
+          (obj) => obj.id === this.selectedConversation.id
+        );
+        this.selectedConversation.messages.push(data); // update the messages in real time
+        this.conversations[convoIndex].last_message.text = data.text; // update the last message in real time
+      },
+    });
   },
   mounted: function () {
-    this.autoScroll();
+    this.autoScroll(1200);
+  },
+  updated: function () {
+    this.autoScroll(100);
   },
   methods: {
     sentRelativeTime: function (date) {
@@ -270,11 +293,11 @@ export default {
         element.scrollTop = element.scrollHeight;
       }, 0);
     },
-    autoScroll: function () {
+    autoScroll: function (num) {
       setTimeout(function () {
         var element = document.getElementById("msgs-container");
         element.scrollTop = element.scrollHeight;
-      }, 1200);
+      }, num);
     },
     createMessage: function () {
       var convoIndex = this.conversations.findIndex(
@@ -287,7 +310,7 @@ export default {
       axios
         .post("/api/messages", params)
         .then((response) => {
-          this.conversations[convoIndex].messages.push(response.data);
+          // this.conversations[convoIndex].messages.push(response.data);
           this.newMessage = "";
           setTimeout(function updateScroll() {
             var element = document.getElementById("msgs-container");
