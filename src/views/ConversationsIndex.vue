@@ -19,13 +19,14 @@
                 <!-- Most recent message (truncated content & datestamp) -->
                 <td class="final-td">
                   <div class="media-body">
-                    <h5 class="media-heading">{{ conversation.partner.display_name }}</h5>
+                    <h5 class="media-heading">{{ conversation.partner.display_name }} <span v-if="conversation.map_twin === true"><svg style="padding-bottom: 9px;" xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 48 48"><title>b-location</title><g stroke-linecap="square" stroke-linejoin="miter" stroke-width="3" fill="#51bcda" stroke="#51bcda"><path fill="none" stroke="#51bcda" stroke-miterlimit="10" d="M20,43.672 c0-1.208-0.529-2.357-1.476-3.108C17.078,39.416,14.57,38,11,38s-6.078,1.416-7.524,2.564C2.529,41.315,2,42.464,2,43.672V46h18 V43.672z"></path> <circle fill="none" stroke="#51bcda" stroke-miterlimit="10" cx="11" cy="28" r="5"></circle> <path fill="none" stroke="#51bcda" stroke-miterlimit="10" d="M46,43.672 c0-1.208-0.529-2.357-1.476-3.108C43.078,39.416,40.57,38,37,38s-6.078,1.416-7.524,2.564C28.529,41.315,28,42.464,28,43.672V46h18 V43.672z"></path> <circle fill="none" stroke="#51bcda" stroke-miterlimit="10" cx="37" cy="28" r="5"></circle> <path fill="none" stroke-miterlimit="10" d="M32,9.634 C32,14.366,24,22,24,22s-8-7.634-8-12.366C16,4.748,20.16,2,24,2S32,4.748,32,9.634z"></path> <circle data-stroke="none" cx="24" cy="10" r="2" stroke-linejoin="miter" stroke-linecap="square" stroke="none"></circle></g></svg></span></h5>
                     <div v-if="conversation.last_message">
                       <p class="text-muted truncate float-left"><small>{{ conversation.last_message.text }}</small></p>
                       <p class="text-muted float-right"><small> 𐄁 {{ sentTime(conversation.last_message.created_at) }}</small></p>
                     </div>
                     <div v-if="!conversation.last_message">
-                      <p class="text-muted"><small><em>Start the conversation</em></small></p>
+                      <p v-if="conversation.map_twin !== true" class="text-muted"><small><em>Start the conversation</em></small></p>
+                      <p v-else class="text-muted"><small><em>Say hello to your Map Twin!</em></small></p>
                     </div>
                   </div>
                 </td>
