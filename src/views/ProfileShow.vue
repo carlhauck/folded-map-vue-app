@@ -24,6 +24,7 @@
           </div>
         </div>    
       </div>
+      <!-- Right column -->
       <div class="col-md-7 ml-auto mr-auto">
         <div class="card card-profile card-plain text-left">
           <div class="card-body">
@@ -44,7 +45,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 img {
   object-fit: cover;
   width: 100%;

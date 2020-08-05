@@ -48,12 +48,14 @@
       </div>
     </div>
 
+    <!-- User update form -->
     <div class="section section-gray">
       <div class="container container-tim">
         <div class="row">
           <div class="col-md-8 ml-auto mr-auto">
             <form v-on:submit.prevent="updateUser()">
               <h2 class="text-center">Edit Profile</h2>
+              <!-- Update password button (toggles modal) -->
               <div class="form-group text-center">
                 <button class="btn btn-warning btn-round btn-sm" type="button" data-toggle="modal" data-target="#passwordModal">Update password</button>
               </div>
@@ -140,6 +142,7 @@
                 <label>What you'd change about where you live:</label>
                 <textarea class="form-control" id="WhatIWouldChange" rows="3" v-model="user.what_i_would_change"></textarea>
               </div>
+              <!-- Update/destroy buttons -->
               <div class="form-group">
                 <div class="row justify-content-center">
                   <div class="col-4 text-center">

@@ -38,6 +38,7 @@
       </div>
     </div>
     
+    <!-- Sign up form -->
     <div class="section section-gray">
       <div class="container container-tim">
         <div class="row">

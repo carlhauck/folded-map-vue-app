@@ -72,6 +72,7 @@
       <div class="row">
         <!-- Left column -->
         <div class="col-md-4 ml-auto mr-auto text-center">
+          <!-- Block pair w/ map modal link -->
           <div id="block-container">
             <div class="container">
               <div class="card-title text-center">
@@ -81,6 +82,7 @@
               </div>
             </div>
           </div>
+          <!-- Block pair members grid -->
           <div id="users-container">
             <div class="container">
               <div class="row">
@@ -99,11 +101,13 @@
 
         <!-- Right column -->
         <div class="col-md-8 ml-auto mr-auto">
+          <!-- Create post button -->
           <div id="new-post-container">
               <div id="new-post-button" class="text-center">
                 <button type="button" style="width: 12%" class="btn btn-default btn-round btn-border" data-toggle="modal" data-target="#createPostModal"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"><title>d-edit</title><g stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" fill="#66615B" stroke="#66615B"><polyline points="9 5 2 5 2 22 19 22 19 15" fill="none" stroke="#66615B" stroke-miterlimit="10"></polyline> <line x1="16" y1="5" x2="19" y2="8" fill="none" stroke-miterlimit="10" stroke-linecap="butt"></line> <polygon points="11 16 7 17 8 13 19 2 22 5 11 16" fill="none" stroke-miterlimit="10"></polygon></g></svg></button>
               </div>
           </div>
+          <!-- Block pair posts index -->
           <div id="posts-container">
             <div class="media-area">
               <div v-for="post in posts">

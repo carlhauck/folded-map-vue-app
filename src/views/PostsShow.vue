@@ -1,6 +1,7 @@
 <template>
   <div class="posts-show">
     
+    <!-- Edit post modal -->
     <div class="modal fade" id="updatePostModal" tabindex="-1" role="dialog" aria-hidden="false">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -29,6 +30,7 @@
     </div>
 
     <div class="col-md-8 ml-auto mr-auto">
+      <!-- Post content -->
       <div class="media-area">
         <div class="media">
           <router-link class="pull-left" :to="`/users/${post.user_id}`">
@@ -47,7 +49,7 @@
               <span class="btn btn-info btn-link">{{ post.comments.length }} <span v-if="post.comments.length == 1">comment</span><span v-if="post.comments.length != 1">comments</span></span><span v-if="post.user_id == $parent.getUserInfo().id">
               <a href="javascript:;" class="btn btn-warning btn-link" data-toggle="modal" data-target="#updatePostModal">Edit post</a><span class="btn btn-primary btn-link" v-on:click="destroyPost(post)">Delete post</span></span>
             </div>
-
+            <!-- Post comments -->
             <div v-for="comment in comments">
               <div class="media">
                 <router-link class="pull-left" :to="`/users/${comment.user_id}`">
@@ -71,6 +73,7 @@
                 </div>
               </div>
             </div>
+            <!-- Comment create -->
             <div class="media media-post">
               <router-link class="pull-left author" to="/profile">
                 <div class="avatar">

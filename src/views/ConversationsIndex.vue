@@ -7,7 +7,7 @@
         <div id="convos-container">
           <div class="table-responsive">
             <tbody>
-              <tr v-for="conversation in conversations" v-on:click="selectConvo(conversation)">
+              <tr v-for="conversation in sortedConversations" v-on:click="selectConvo(conversation)">
                 <!-- Profile image -->
                 <td>
                   <div class="media">
@@ -39,7 +39,7 @@
       <div class="col-md-8 ml-auto mr-auto">
         <div id="#convo-partner-container">
           <div v-if="selectedConversation">
-            <h4 class="text-center">Conversation w/ <router-link :to="`/users/${selectedConversation.partner.id}`">{{ selectedConversation.partner.display_name }}</router-link></h4>
+            <h4 class="text-center">Conversation w/ <router-link :to="`/users/${selectedConversation.partner.id}`">{{ selectedConversation.partner.display_name }} <span v-if="selectedConversation.map_twin === true"><svg style="padding-bottom: 9px;" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 48 48"><title>b-location</title><g stroke-linecap="square" stroke-linejoin="miter" stroke-width="3" fill="#51bcda" stroke="#51bcda"><path fill="none" stroke="#51bcda" stroke-miterlimit="10" d="M20,43.672 c0-1.208-0.529-2.357-1.476-3.108C17.078,39.416,14.57,38,11,38s-6.078,1.416-7.524,2.564C2.529,41.315,2,42.464,2,43.672V46h18 V43.672z"></path> <circle fill="none" stroke="#51bcda" stroke-miterlimit="10" cx="11" cy="28" r="5"></circle> <path fill="none" stroke="#51bcda" stroke-miterlimit="10" d="M46,43.672 c0-1.208-0.529-2.357-1.476-3.108C43.078,39.416,40.57,38,37,38s-6.078,1.416-7.524,2.564C28.529,41.315,28,42.464,28,43.672V46h18 V43.672z"></path> <circle fill="none" stroke="#51bcda" stroke-miterlimit="10" cx="37" cy="28" r="5"></circle> <path fill="none" stroke-miterlimit="10" d="M32,9.634 C32,14.366,24,22,24,22s-8-7.634-8-12.366C16,4.748,20.16,2,24,2S32,4.748,32,9.634z"></path> <circle data-stroke="none" cx="24" cy="10" r="2" stroke-linejoin="miter" stroke-linecap="square" stroke="none"></circle></g></svg></span></router-link></h4>
           </div>
         </div>
         <div id="msgs-container">
@@ -108,6 +108,7 @@
       </div>
     </div>
 
+    <!-- If no conversations... -->
     <div v-else class="row justify-content-center">
       <div class="card card-profile card-plain">
         <div class="card-body">
@@ -265,6 +266,30 @@ export default {
       newMessage: "",
     };
   },
+  computed: {
+    // sortedConversations: function () {
+    //   var result = this.conversations.sort(
+    //     (a, b) =>
+    //       (a.last_message == null) - (b.last_message == null) ||
+    //       new Date(b.last_message.created_at) -
+    //         new Date(a.last_message.created_at)
+    //   );
+    //   return result;
+    // },
+    sortedConversations: function () {
+      console.log(this.conversations[8].last_message);
+      console.log(this.conversations[9].last_message);
+      var result = this.conversations
+        .slice(0)
+        .sort(
+          (a, b) =>
+            (b.last_message === "null") - (a.last_message === "null") ||
+            new Date(b.last_message.created_at) -
+              new Date(a.last_message.created_at)
+        );
+      return result;
+    },
+  },
   created: function () {
     axios.get("/api/conversations").then((response) => {
       this.conversations = response.data;
@@ -283,36 +308,32 @@ export default {
       received: (data) => {
         // Called when there's incoming data on the websocket for this channel
         console.log("Data from MessagesChannel:", data);
-        var convoIndex = this.conversations.findIndex(
-          (obj) => obj.id === this.selectedConversation.id
-        );
         this.selectedConversation.messages.push(data); // update the messages in real time
-        if (this.conversations[convoIndex].last_message) {
-          this.conversations[convoIndex].last_message.text = data.text;
+        if (this.selectedConversation.last_message) {
+          this.selectedConversation.last_message = data;
         } else {
-          this.conversations[convoIndex].last_message = { text: data.text };
+          this.selectedConversation.last_message = {
+            text: data.text,
+            created_at: data.created_at,
+          };
         } // update the last message in real time
       },
     });
   },
-  // mounted: function () {
-  //   this.sortConversations();
-  // },
   updated: function () {
     this.autoScroll(100);
+    // this.sortConversations();
   },
   methods: {
     // sortConversations: function () {
-    //   setTimeout(function () {
-    //     var result = this.conversations.sort(
-    //       (a, b) =>
-    //         (a.last_message === null) - (b.last_message === null) ||
-    //         new Date(a.last_message.created_at) -
-    //           new Date(b.last_message.created_at)
-    //     );
-    //     console.log(result);
-    //     return result;
-    //   }, 5000);
+    //   var result = this.conversations.sort(
+    //     (a, b) =>
+    //       (a.last_message === null) - (b.last_message === null) ||
+    //       new Date(a.last_message.created_at) -
+    //         new Date(b.last_message.created_at)
+    //   );
+    //   console.log(result);
+    //   this.conversations = result;
     // },
     autoScroll: function (num) {
       setTimeout(function () {
@@ -331,12 +352,7 @@ export default {
       axios
         .post("/api/messages", params)
         .then((response) => {
-          // this.conversations[convoIndex].messages.push(response.data);
           this.newMessage = "";
-          setTimeout(function updateScroll() {
-            var element = document.getElementById("msgs-container");
-            element.scrollTop = element.scrollHeight;
-          }, 0);
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
@@ -344,10 +360,6 @@ export default {
     },
     selectConvo: function (conversation) {
       this.selectedConversation = conversation;
-      setTimeout(function updateScroll() {
-        var element = document.getElementById("msgs-container");
-        element.scrollTop = element.scrollHeight;
-      }, 0);
     },
     sentRelativeTime: function (date) {
       return moment.utc(date).fromNow();

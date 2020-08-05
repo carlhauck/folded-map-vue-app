@@ -27,8 +27,8 @@
                 </div>
               </a>
               <ul class="dropdown-menu dropdown-menu-right">
-                <router-link class="dropdown-item" to="/profile">Profile</router-link>
-                <router-link class="dropdown-item" to="/logout">Log Out</router-link>
+                <router-link class="dropdown-item" to="/profile"><svg style="margin-right: 6px" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><title>circle-09</title><g stroke-width="1" fill="#66615B" stroke="#66615B"><circle cx="8" cy="7" r="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></circle> <path d="M6.5,10.162a1.939,1.939,0,0,1-1.365,1.794L2.868,13.044a1.937,1.937,0,0,0-.276.143" fill="none" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M13.408,13.188a1.937,1.937,0,0,0-.276-.143l-2.265-1.088c-.832-.438-1.365-.933-1.365-1.794" fill="none" stroke-linecap="round" stroke-linejoin="round"></path> <circle cx="8" cy="8" r="7.5" fill="none" stroke="#66615B" stroke-linecap="round" stroke-linejoin="round"></circle></g></svg> Profile</router-link>
+                <router-link class="dropdown-item" to="/logout"><svg style="margin-right: 5px" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><title>log-out</title><g stroke-width="1" fill="#66615B" stroke="#66615B"><path fill="none" stroke="#66615B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M6.5,5.5v-3 c0-0.552,0.448-1,1-1h7c0.552,0,1,0.448,1,1v12c0,0.552-0.448,1-1,1h-7c-0.552,0-1-0.448-1-1v-3"></path> <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="11.5" y1="8.5" x2="0.5" y2="8.5"></line> <polyline fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,5.5 0.5,8.5 3.5,11.5 "></polyline></g></svg> Log Out</router-link>
               </ul>
             </li>
             <li class="nav-item">
