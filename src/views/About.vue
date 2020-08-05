@@ -175,6 +175,9 @@ li {
 .card {
   margin-bottom: 10px;
 }
+svg:hover g path {
+  fill: #514d49;
+}
 </style>
 
 <script>
