@@ -89,7 +89,7 @@
                     <router-link :to="`/users/${user.id}`">
                       <img v-if="user.image_url" class="img-fluid rounded cover" :src="user.image_url" :alt="user.display_name"><img v-if="!user.image_url" class="img-fluid rounded cover" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
                     </router-link>
-                    <p class="text-center"><router-link :to="`/users/${user.id}`">{{ user.display_name }}</router-link></p>
+                    <p class="text-center pt-14"><router-link :to="`/users/${user.id}`">{{ user.display_name }}</router-link></p>
                   </div>
                 </div>
               </div>
@@ -214,6 +214,18 @@
 h3 {
   color: #66615b;
 }
+h3:hover {
+  color: #514d49;
+}
+h3:hover svg g polygon {
+  stroke: #514d49;
+}
+h5.media-heading {
+  color: #66615b;
+}
+h5.media-heading:hover {
+  color: #514d49;
+}
 p {
   white-space: pre-wrap;
   overflow-wrap: break-word;
@@ -221,6 +233,27 @@ p {
 img.post-pic {
   margin-top: 8px;
   max-width: 300px;
+}
+.pt-14 {
+  font-size: 14px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+a {
+  font-family: "silkamedium";
+}
+.btn.btn-default.btn-round.btn-border {
+  background-color: transparent;
+}
+.btn.btn-default.btn-round.btn-border:hover {
+  background-color: #ececec;
+}
+.btn.btn-default.btn-round.btn-border:hover svg g polygon {
+  /* fill: #514d49; */
+  stroke: #514d49;
+}
+.btn.btn-default.btn-round.btn-border:hover polyline {
+  stroke: #514d49;
 }
 </style>
 

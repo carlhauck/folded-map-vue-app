@@ -23,7 +23,7 @@
               <a href="#" class="nav-link" data-toggle="dropdown" width="30" height="30" aria-expanded="false">
                 <div class="profile-photo-small">
                   <img v-if="getUserInfo().image_url" class="img-circle img-responsive img-no-padding" :src="getUserInfo().image_url" :alt="getUserInfo().image_url.display_name">
-                  <img v-if="!getUserInfo().image_url" class="img-circle img-responsive img-no-padding" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
+                  <img v-if="getUserInfo().image_url === null" class="img-circle img-responsive img-no-padding" src="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg" alt="default avatar">
                 </div>
               </a>
               <ul class="dropdown-menu dropdown-menu-right">

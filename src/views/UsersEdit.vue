@@ -217,9 +217,11 @@ export default {
     };
   },
   created: function () {
-    axios.get(`/api/users/${this.$parent.getUserInfo().id}`).then((response) => {
-      this.user = response.data;
-    });
+    axios
+      .get(`/api/users/${this.$parent.getUserInfo().id}`)
+      .then((response) => {
+        this.user = response.data;
+      });
   },
   methods: {
     updateUser: function () {
@@ -240,6 +242,7 @@ export default {
       axios
         .patch(`/api/users/${this.user.id}`, params)
         .then((response) => {
+          localStorage.setItem("image_url", this.user.image_url);
           this.$router.push("/profile");
         })
         .catch((error) => {

@@ -123,6 +123,15 @@
 </template>
 
 <style scoped>
+a {
+  font-family: "silkasemibold";
+}
+svg:hover g {
+  fill: #514d49;
+}
+tr:hover h5 {
+  color: #514d49;
+}
 .avatar-current-user {
   margin: 0 auto;
   width: 64px;
@@ -249,7 +258,6 @@ import axios from "axios";
 import moment from "moment";
 import ActionCable from "actioncable";
 export default {
-  // mixins: [Vue2Filters.mixin],
   data: function () {
     return {
       conversations: [],
@@ -260,8 +268,8 @@ export default {
   created: function () {
     axios.get("/api/conversations").then((response) => {
       this.conversations = response.data;
+      console.log(response.data);
       this.selectedConversation = response.data[0];
-      console.log(response.data[0]);
     });
     var cable = ActionCable.createConsumer("ws://localhost:3000/cable");
     cable.subscriptions.create("MessagesChannel", {
@@ -287,23 +295,25 @@ export default {
       },
     });
   },
+  // mounted: function () {
+  //   this.sortConversations();
+  // },
   updated: function () {
     this.autoScroll(100);
   },
   methods: {
-    sentRelativeTime: function (date) {
-      return moment.utc(date).fromNow();
-    },
-    sentTime: function (date) {
-      return moment.utc(date).format("MMM D");
-    },
-    selectConvo: function (conversation) {
-      this.selectedConversation = conversation;
-      setTimeout(function updateScroll() {
-        var element = document.getElementById("msgs-container");
-        element.scrollTop = element.scrollHeight;
-      }, 0);
-    },
+    // sortConversations: function () {
+    //   setTimeout(function () {
+    //     var result = this.conversations.sort(
+    //       (a, b) =>
+    //         (a.last_message === null) - (b.last_message === null) ||
+    //         new Date(a.last_message.created_at) -
+    //           new Date(b.last_message.created_at)
+    //     );
+    //     console.log(result);
+    //     return result;
+    //   }, 5000);
+    // },
     autoScroll: function (num) {
       setTimeout(function () {
         var element = document.getElementById("msgs-container");
@@ -331,6 +341,19 @@ export default {
         .catch((error) => {
           this.errors = error.response.data.errors;
         });
+    },
+    selectConvo: function (conversation) {
+      this.selectedConversation = conversation;
+      setTimeout(function updateScroll() {
+        var element = document.getElementById("msgs-container");
+        element.scrollTop = element.scrollHeight;
+      }, 0);
+    },
+    sentRelativeTime: function (date) {
+      return moment.utc(date).fromNow();
+    },
+    sentTime: function (date) {
+      return moment.utc(date).format("MMM D");
     },
   },
 };

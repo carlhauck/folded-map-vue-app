@@ -230,7 +230,9 @@ export default {
           this.closeModal();
           localStorage.setItem("jwt", response.data.jwt);
           localStorage.setItem("id", response.data.user_id);
-          localStorage.setItem("image_url", response.data.image_url);
+          if (response.data.image_url) {
+            localStorage.setItem("image_url", response.data.image_url);
+          }
           this.$router.push("/community");
         })
         .catch((error) => {
