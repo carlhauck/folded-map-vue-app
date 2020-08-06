@@ -267,15 +267,6 @@ export default {
     };
   },
   computed: {
-    // sortedConversations: function () {
-    //   var result = this.conversations.sort(
-    //     (a, b) =>
-    //       (a.last_message == null) - (b.last_message == null) ||
-    //       new Date(b.last_message.created_at) -
-    //         new Date(a.last_message.created_at)
-    //   );
-    //   return result;
-    // },
     sortedConversations: function () {
       var result = this.conversations
         .slice(0)
@@ -306,15 +297,16 @@ export default {
       received: (data) => {
         // Called when there's incoming data on the websocket for this channel
         console.log("Data from MessagesChannel:", data);
-        this.selectedConversation.messages.push(data); // update the messages in real time
-        if (this.selectedConversation.last_message) {
+        if (data.conversation_id === this.selectedConversation.id) {
+          this.selectedConversation.messages.push(data);
           this.selectedConversation.last_message = data;
         } else {
-          this.selectedConversation.last_message = {
-            text: data.text,
-            created_at: data.created_at,
-          };
-        } // update the last message in real time
+          var convoIndex = this.conversations.findIndex(
+            (obj) => obj.id === data.conversation_id
+          );
+          this.conversations[convoIndex].messages.push(data);
+          this.conversations[convoIndex].last_message = data;
+        } // update the messages in real time
       },
     });
   },
