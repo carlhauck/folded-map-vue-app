@@ -277,8 +277,6 @@ export default {
     //   return result;
     // },
     sortedConversations: function () {
-      console.log(this.conversations[8].last_message);
-      console.log(this.conversations[9].last_message);
       var result = this.conversations
         .slice(0)
         .sort(
@@ -294,7 +292,7 @@ export default {
     axios.get("/api/conversations").then((response) => {
       this.conversations = response.data;
       console.log(response.data);
-      this.selectedConversation = response.data[0];
+      this.selectedConversation = response.data[response.data.length - 1];
     });
     var cable = ActionCable.createConsumer("ws://localhost:3000/cable");
     cable.subscriptions.create("MessagesChannel", {
