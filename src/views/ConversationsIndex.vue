@@ -212,7 +212,7 @@ textarea {
 }
 .truncate {
   white-space: nowrap;
-  max-width: 226px;
+  max-width: 222px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -251,6 +251,10 @@ textarea {
   margin-bottom: 1em;
   position: sticky;
   bottom: 0;
+}
+p {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 </style>
 
