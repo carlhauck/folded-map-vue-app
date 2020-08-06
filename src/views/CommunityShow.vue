@@ -77,7 +77,7 @@
             <div class="container">
               <div class="card-title text-center">
                 <a href="#" v-on:click="renderMap()" data-toggle="modal" data-target="#showMapModal">
-                  <h3>{{ block_pair.ns_max }}<svg style="margin: 0 0 3 2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16"><title>increase</title><g stroke-width="1.3" fill="#111111" stroke="#66615b"><polygon fill="#eeeeee" stroke="#66615b" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,5.5 8,0.5 12.5,5.5 "></polygon> <polygon fill="#eeeeee" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="3.5,10.5 8,15.5 12.5,10.5 "></polygon></g></svg> &nbsp;{{ block_pair.ew_max }}<svg style="margin: 0 0 3 -2" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 16 16"><title>small-triangle-left</title><g stroke-width="1.1" fill="##eeeeee" stroke="#66615b"><polygon fill="#eeeeee" stroke="#66615b" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="10.5,3.5 5.5,8 10.5,12.5 "></polygon></g></svg></h3>
+                  <h2>{{ block_pair_n_s }}<svg style="margin: 0 0 5 0" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><title>increase-4</title><g stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" fill="#111111" stroke="#66615b"><polygon points="23 20 9 20 16 29 23 20" fill="none" stroke-miterlimit="10"></polygon> <polygon points="9 12 23 12 16 3 9 12" fill="none" stroke="#66615b" stroke-miterlimit="10"></polygon></g></svg> {{ block_pair_e_w }}<svg style="margin: 0 0 5 -5" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><title>small-triangle-left-3</title><g stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" fill="#111111" stroke="#66615b"><polygon fill="none" stroke="#66615b" stroke-miterlimit="10" points="21,9 21,23 11,16 " transform="translate(0, 0)"></polygon></g></svg></h2>
                 </a>
               </div>
             </div>
@@ -215,13 +215,16 @@
   margin-top: 22px;
   margin-bottom: 10px;
 }
-h3 {
+h2 {
   color: #66615b;
+  white-space: pre-wrap;
+  margin-top: 17px;
+  margin-bottom: -3px;
 }
-h3:hover {
+h2:hover {
   color: #514d49;
 }
-h3:hover svg g polygon {
+h2:hover svg g polygon {
   stroke: #514d49;
 }
 h5.media-heading {
@@ -269,6 +272,8 @@ export default {
     return {
       current_user: {},
       block_pair: {},
+      block_pair_n_s: "",
+      block_pair_e_w: "",
       posts: [],
       post: {},
       users: [],
@@ -291,6 +296,8 @@ export default {
           .get(`/api/block_pair/${this.current_user.block_pair_id}`)
           .then((response) => {
             this.block_pair = response.data;
+            this.block_pair_n_s = response.data.name.split("_")[2];
+            this.block_pair_e_w = response.data.name.split("_")[1];
             this.posts = response.data.posts;
             this.users = response.data.users;
           });
