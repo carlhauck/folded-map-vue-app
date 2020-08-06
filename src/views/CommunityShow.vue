@@ -319,7 +319,8 @@ export default {
       axios
         .post("/api/posts", params)
         .then((response) => {
-          this.posts.push(response.data);
+          this.posts.unshift(response.data);
+          $("#createPostModal").modal("toggle");
           this.newPost = "";
           this.newPostImageUrl = "";
         })
